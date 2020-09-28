@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS CITA_EXAMEN (
   `codigo` INT NOT NULL AUTO_INCREMENT,
   `fecha` DATE NOT NULL,
   `hora` TIME NOT NULL,
+  `orden_medico` LONGBLOB,
   `paciente_codigo` VARCHAR(45) NOT NULL,
   `examen_laboratorio_codigo` VARCHAR(45) NOT NULL,
   `laboratorista_codigo` VARCHAR(45) NOT NULL,
@@ -113,8 +114,8 @@ CREATE TABLE IF NOT EXISTS INFORME_CONSULTA (
 	FOREIGN KEY (`consulta_codigo`) REFERENCES CONSULTA (`codigo`),
     FOREIGN KEY (`paciente_codigo`) REFERENCES PACIENTE (`codigo`),
     FOREIGN KEY (`medico_codigo`) REFERENCES MEDICO (`codigo`)
-);          
-
+);
+         
 CREATE TABLE IF NOT EXISTS INFORME_EXAMEN (
   `codigo` VARCHAR(45) NOT NULL,
   `descripcion` VARCHAR(300) NOT NULL,
@@ -128,6 +129,13 @@ CREATE TABLE IF NOT EXISTS INFORME_EXAMEN (
     FOREIGN KEY (`paciente_codigo`) REFERENCES PACIENTE (`codigo`),
     FOREIGN KEY (`laboratorista_codigo`) REFERENCES LABORATORISTA (`codigo`)
 );
+
+CREATE TABLE IF NOT EXISTS ARCHIVO_INFORME(
+	`archivo` LONGBLOB NOT NULL,
+    `informe_examen_codigo` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`informe_examen_codigo`),
+		FOREIGN KEY (`informe_examen_codigo`) REFERENCES INFORME_EXAMEN(`codigo`)
+); 
 
 CREATE TABLE IF NOT EXISTS ESPECIALIZACION (
   `especialidad_nombre` VARCHAR(150) NOT NULL,
@@ -147,6 +155,13 @@ CREATE TABLE IF NOT EXISTS ORDEN_EXAMEN(
 	FOREIGN KEY (`medico_codigo`) REFERENCES MEDICO (`codigo`),
     FOREIGN KEY (`paciente_codigo`) REFERENCES PACIENTE (`codigo`),
     FOREIGN KEY (`examen_laboratorio_codigo`) REFERENCES EXAMEN_LABORATORIO (`codigo`)
+);
+
+CREATE TABLE IF NOT EXISTS ARCHIVO_ORDEN(
+	`archivo` LONGBLOB NOT NULL,
+    `orden_examen_codigo` INT NOT NULL,
+    PRIMARY KEY (`orden_examen_codigo`),
+		FOREIGN KEY (`orden_examen_codigo`) REFERENCES ORDEN_EXAMEN(`codigo`)
 );
 
 CREATE TABLE IF NOT EXISTS DIAS_TRABAJO(

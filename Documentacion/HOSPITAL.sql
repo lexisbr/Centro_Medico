@@ -1,7 +1,13 @@
+-- -----------------------------------------------------
+-- Esquema CENTRO_MEDICO
+-- -----------------------------------------------------
 DROP SCHEMA IF EXISTS CENTRO_MEDICO;
 CREATE SCHEMA IF NOT EXISTS CENTRO_MEDICO;
 USE CENTRO_MEDICO;
 
+-- -----------------------------------------------------
+-- Tabla PACIENTE
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS PACIENTE (
   `codigo` VARCHAR(45) NOT NULL,
   `nombre` VARCHAR(200) NOT NULL,
@@ -16,6 +22,9 @@ CREATE TABLE IF NOT EXISTS PACIENTE (
   PRIMARY KEY (`codigo`)
 );
 
+-- -----------------------------------------------------
+-- Tabla MEDICO
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS MEDICO (
   `codigo` VARCHAR(45) NOT NULL,
   `nombre` VARCHAR(200) NOT NULL,
@@ -30,6 +39,10 @@ CREATE TABLE IF NOT EXISTS MEDICO (
   PRIMARY KEY (`codigo`)
 );
 
+-- -----------------------------------------------------
+-- Tabla LABORATORISTA
+-- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS LABORATORISTA (
   `codigo` VARCHAR(45) NOT NULL,
   `nombre` VARCHAR(200) NOT NULL,
@@ -42,6 +55,9 @@ CREATE TABLE IF NOT EXISTS LABORATORISTA (
   PRIMARY KEY (`codigo`)
 );
 
+-- -----------------------------------------------------
+-- Tabla ADMINISTRADOR
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS ADMINISTRADOR (
   `codigo` VARCHAR(45) NOT NULL,
   `nombre` VARCHAR(200) NOT NULL,
@@ -50,12 +66,18 @@ CREATE TABLE IF NOT EXISTS ADMINISTRADOR (
   PRIMARY KEY (`codigo`)
 );
 
+-- -----------------------------------------------------
+-- Tabla ESPECIALIDAD
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS ESPECIALIDAD (
   `nombre` VARCHAR(150) NOT NULL,
   PRIMARY KEY (`nombre`)
 );
 
-CREATE TABLE IF NOT EXISTS 	CONSULTA (
+-- -----------------------------------------------------
+-- Tabla CONSULTA
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS CONSULTA (
   `codigo` INT NOT NULL AUTO_INCREMENT,
   `costo` DOUBLE NOT NULL,
   `nombre_especialidad` VARCHAR(150) NOT NULL,
@@ -63,6 +85,9 @@ CREATE TABLE IF NOT EXISTS 	CONSULTA (
     FOREIGN KEY(`nombre_especialidad`) REFERENCES ESPECIALIDAD(`nombre`)
 );
 
+-- -----------------------------------------------------
+-- Tabla CITA_MEDICA
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS 	CITA_MEDICA (
   `codigo` VARCHAR(45) NOT NULL,
   `fecha` DATE NOT NULL,
@@ -76,6 +101,9 @@ CREATE TABLE IF NOT EXISTS 	CITA_MEDICA (
 	  FOREIGN KEY(`consulta_codigo`) REFERENCES CONSULTA(`codigo`)
 );
 
+-- -----------------------------------------------------
+-- Tabla EXAMEN_LABORATORIO
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS EXAMEN_LABORATORIO (
   `codigo` VARCHAR(45) NOT NULL,
   `nombre` VARCHAR(200) NOT NULL,
@@ -88,6 +116,9 @@ CREATE TABLE IF NOT EXISTS EXAMEN_LABORATORIO (
     FOREIGN KEY (`laboratorista_codigo`) REFERENCES LABORATORISTA (`codigo`)
 );
 
+-- -----------------------------------------------------
+-- Tabla CITA_EXAMEN
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS CITA_EXAMEN (
   `codigo` INT NOT NULL AUTO_INCREMENT,
   `fecha` DATE NOT NULL,
@@ -102,6 +133,9 @@ CREATE TABLE IF NOT EXISTS CITA_EXAMEN (
     FOREIGN KEY (`laboratorista_codigo`) REFERENCES LABORATORISTA (`codigo`)
 );
 
+-- -----------------------------------------------------
+-- Tabla INFORME_CONSULTA
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS INFORME_CONSULTA (
   `codigo` VARCHAR(45) NOT NULL,
   `descripcion` VARCHAR(300) NOT NULL,
@@ -115,7 +149,10 @@ CREATE TABLE IF NOT EXISTS INFORME_CONSULTA (
     FOREIGN KEY (`paciente_codigo`) REFERENCES PACIENTE (`codigo`),
     FOREIGN KEY (`medico_codigo`) REFERENCES MEDICO (`codigo`)
 );
-         
+
+-- -----------------------------------------------------
+-- Tabla INFORME_EXAMEN
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS INFORME_EXAMEN (
   `codigo` VARCHAR(45) NOT NULL,
   `descripcion` VARCHAR(300) NOT NULL,
@@ -130,6 +167,9 @@ CREATE TABLE IF NOT EXISTS INFORME_EXAMEN (
     FOREIGN KEY (`laboratorista_codigo`) REFERENCES LABORATORISTA (`codigo`)
 );
 
+-- -----------------------------------------------------
+-- Tabla ARCHIVO_INFORME
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS ARCHIVO_INFORME(
 	`archivo` LONGBLOB NOT NULL,
     `informe_examen_codigo` VARCHAR(45) NOT NULL,
@@ -137,6 +177,9 @@ CREATE TABLE IF NOT EXISTS ARCHIVO_INFORME(
 		FOREIGN KEY (`informe_examen_codigo`) REFERENCES INFORME_EXAMEN(`codigo`)
 ); 
 
+-- -----------------------------------------------------
+-- Tabla ESPECIALIZACION
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS ESPECIALIZACION (
   `especialidad_nombre` VARCHAR(150) NOT NULL,
   `medico_codigo` VARCHAR(45) NOT NULL,
@@ -145,6 +188,9 @@ CREATE TABLE IF NOT EXISTS ESPECIALIZACION (
     FOREIGN KEY (`medico_codigo`) REFERENCES MEDICO (`codigo`)
 );
 
+-- -----------------------------------------------------
+-- Tabla ORDEN_EXAMEN
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS ORDEN_EXAMEN(
   `codigo` INT NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(150) NOT NULL,
@@ -157,6 +203,9 @@ CREATE TABLE IF NOT EXISTS ORDEN_EXAMEN(
     FOREIGN KEY (`examen_laboratorio_codigo`) REFERENCES EXAMEN_LABORATORIO (`codigo`)
 );
 
+-- -----------------------------------------------------
+-- Tabla ARCHIVO_ORDEN
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS ARCHIVO_ORDEN(
 	`archivo` LONGBLOB NOT NULL,
     `orden_examen_codigo` INT NOT NULL,
@@ -164,6 +213,9 @@ CREATE TABLE IF NOT EXISTS ARCHIVO_ORDEN(
 		FOREIGN KEY (`orden_examen_codigo`) REFERENCES ORDEN_EXAMEN(`codigo`)
 );
 
+-- -----------------------------------------------------
+-- Tabla DIAS_TRABAJO
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS DIAS_TRABAJO(
   `codigo` INT NOT NULL AUTO_INCREMENT,
   `dias` VARCHAR(45) NOT NULL,

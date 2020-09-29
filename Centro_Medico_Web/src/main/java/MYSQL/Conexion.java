@@ -15,7 +15,7 @@ public class Conexion {
     private static final String driver = "com.mysql.jdbc.Driver";
     private static final String user = "root";
     private static final String password = "5200fcb1LEXIS.";
-    private static final String url = "jdbc:mysql://localhost/CENTRO_MEDICO?useSSL=false";
+    private static final String url = "jdbc:mysql://localhost/CENTRO_MEDICO?allowPublicKeyRetrieval=true&useSSL=false";
     private static final int MYSQL_DUPLICATE_PK = 1062;
      
     

@@ -1,5 +1,9 @@
 package Entidades;
 
+import MYSQL.Conexion;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  *
  * @author lex
@@ -39,7 +43,23 @@ public class Dias_trabajo {
         this.laboratorista_codigo = laboratorista_codigo;
     }
     
-    
+    public void insertarDias_trabajo() throws SQLException{
+        String query = "INSERT INTO DIAS_TRABAJO VALUES(?,?,?)";
+        
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setInt(1,getCodigo());
+            st.setString(2,getDias());
+            st.setString(3,getLaboratorista_codigo());
+            //Ejecuta el insert
+            st.execute();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+        
+    }
     
     
 }

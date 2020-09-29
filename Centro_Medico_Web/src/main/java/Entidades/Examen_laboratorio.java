@@ -5,6 +5,12 @@
  */
 package Entidades;
 
+import MYSQL.Conexion;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
+
 /**
  *
  * @author lex
@@ -16,16 +22,14 @@ public class Examen_laboratorio {
     private String descripcion;
     private double costo;
     private String tipo_archivo;
-    private String laboratorista_codigo;
 
-    public Examen_laboratorio(String codigo, String nombre, boolean requiere_orden, String descripcion, double costo, String tipo_archivo, String laboratorista_codigo) {
+    public Examen_laboratorio(String codigo, String nombre, boolean requiere_orden, String descripcion, double costo, String tipo_archivo) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.requiere_orden = requiere_orden;
         this.descripcion = descripcion;
         this.costo = costo;
         this.tipo_archivo = tipo_archivo;
-        this.laboratorista_codigo = laboratorista_codigo;
     }
 
     public void setCodigo(String codigo) {
@@ -52,10 +56,6 @@ public class Examen_laboratorio {
         this.tipo_archivo = tipo_archivo;
     }
 
-    public void setLaboratorista_codigo(String laboratorista_codigo) {
-        this.laboratorista_codigo = laboratorista_codigo;
-    }
-
     public String getCodigo() {
         return codigo;
     }
@@ -79,12 +79,31 @@ public class Examen_laboratorio {
     public String getTipo_archivo() {
         return tipo_archivo;
     }
-
-    public String getLaboratorista_codigo() {
-        return laboratorista_codigo;
-    }
     
-    
+    public void insertarExamen_laboratorio() throws SQLException{
+        String query = "INSERT INTO EXAMEN_LABORATORIO VALUES(?,?,?,?,?,?)";
+        
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,getCodigo());
+            st.setString(2,getNombre());
+            if(isRequiere_orden()){
+                st.setInt(3,1);
+            }else{
+                st.setInt(3,0);
+            }
+            st.setString(4,getDescripcion());
+            st.setDouble(5,getCosto());
+            st.setString(6,getTipo_archivo());
+            //Ejecuta el insert
+            st.execute();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+        
+    }   
     
     
     

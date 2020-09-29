@@ -5,6 +5,10 @@
  */
 package Entidades;
 
+import MYSQL.Conexion;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  *
  * @author lex
@@ -34,7 +38,22 @@ public class Especializacion {
         this.medico_codigo = medico_codigo;
     }
     
-    
+    public void insertarEspecializacion() throws SQLException{
+        String query = "INSERT INTO ESPECIALIZACION VALUES(?,?)";
+        
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,getEspecialidad_nombre());
+            st.setString(2,getMedico_codigo());
+            //Ejecuta el insert
+            st.execute();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+        
+    }   
 
 
     

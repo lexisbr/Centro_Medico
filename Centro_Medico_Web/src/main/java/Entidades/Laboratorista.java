@@ -5,6 +5,11 @@
  */
 package Entidades;
 
+import MYSQL.Conexion;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -21,8 +26,9 @@ public class Laboratorista {
     private String email;
     private LocalDate fecha_inicio;
     private String password;
+    private String examen_laboratorio_codigo;
 
-    public Laboratorista(String codigo, String nombre, String numero_registro, String dpi, String telefono, String email, LocalDate fecha_inicio, String password) {
+    public Laboratorista(String codigo, String nombre, String numero_registro, String dpi, String telefono, String email, LocalDate fecha_inicio, String password, String examen_laboratorio_codigo) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.numero_registro = numero_registro;
@@ -31,6 +37,7 @@ public class Laboratorista {
         this.email = email;
         this.fecha_inicio = fecha_inicio;
         this.password = password;
+        this.examen_laboratorio_codigo = examen_laboratorio_codigo;
     }
 
     public void setCodigo(String codigo) {
@@ -65,6 +72,11 @@ public class Laboratorista {
         this.password = password;
     }
 
+    public void setExamen_laboratorio_codigo(String examen_laboratorio_codigo) {
+        this.examen_laboratorio_codigo = examen_laboratorio_codigo;
+    }
+    
+
     public String getCodigo() {
         return codigo;
     }
@@ -96,6 +108,32 @@ public class Laboratorista {
     public String getPassword() {
         return password;
     }
+
+    public String getExamen_laboratorio_codigo() {
+        return examen_laboratorio_codigo;
+    }
     
-    
+    public void insertarLaboratorista() throws SQLException{
+        String query = "INSERT INTO LABORATORISTA VALUES(?,?,?,?,?,?,?,?,?)";
+        
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,getCodigo());
+            st.setString(2,getNombre());
+            st.setString(3,getNumero_registro());
+            st.setString(4,getDpi());
+            st.setString(5,getTelefono());
+            st.setString(6,getEmail());
+            st.setDate(7,Date.valueOf(getFecha_inicio()));     
+            st.setString(8,getPassword());
+            st.setString(9,getExamen_laboratorio_codigo());
+            //Ejecuta el insert
+            st.execute();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+        
+    }
 }

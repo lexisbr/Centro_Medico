@@ -1,6 +1,9 @@
 package Entidades;
 
+import MYSQL.Conexion;
 import java.sql.Blob;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
@@ -31,6 +34,22 @@ public class Archivo_informe {
         this.informe_examen_codigo = informe_examen_codigo;
     }
     
+    public void insertarArchivo_informe() throws SQLException{
+        String query = "INSERT INTO ARCHIVO_INFORME VALUES(?,?)";
+        
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setBlob(1,getArchivo());
+            st.setString(2,getInforme_examen_codigo());
+            //Ejecuta el insert
+            st.execute();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+        
+    }
     
   
     

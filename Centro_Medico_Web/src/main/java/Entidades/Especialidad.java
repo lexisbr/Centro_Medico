@@ -1,9 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Entidades;
+
+import MYSQL.Conexion;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
 
 /**
  *
@@ -24,5 +25,19 @@ public class Especialidad {
         return nombre;
     }
     
-    
+    public void insertarEspecialidad() throws SQLException{
+        String query = "INSERT INTO ESPECIALIDAD VALUES(?)";
+        
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,getNombre());
+            //Ejecuta el insert
+            st.execute();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+        
+    }
 }

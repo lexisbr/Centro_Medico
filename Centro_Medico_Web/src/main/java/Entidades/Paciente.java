@@ -140,7 +140,6 @@ public class Paciente {
             //Ejecuta el insert
             st.execute();
             st.close();
-            
         } catch (SQLException e) {
             System.out.println("Error "+e);
         }

@@ -5,6 +5,11 @@
  */
 package Entidades;
 
+import MYSQL.Conexion;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -76,8 +81,27 @@ public class Cita_medica {
     public int getConsulta_codigo() {
         return consulta_codigo;
     }
-    
-    
+   
+    public void insertarCita_medica() throws SQLException{
+        String query = "INSERT INTO CITA_MEDICA VALUES(?,?,?,?,?,?)";
+        
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,getCodigo());
+            st.setDate(2,Date.valueOf(getFecha()));
+            st.setTime(3,Time.valueOf(getHora()));
+            st.setString(4,getPaciente_codigo());
+            st.setString(5,getMedico_codigo());
+            st.setInt(6,getConsulta_codigo());
+            //Ejecuta el insert
+            st.execute();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+        
+    }
     
     
 }

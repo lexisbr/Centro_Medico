@@ -5,6 +5,12 @@
  */
 package Entidades;
 
+import MYSQL.Conexion;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
+
 /**
  *
  * @author lex
@@ -55,6 +61,24 @@ public class Administrador {
     }
     
     
+    public void insertarAdministrador() throws SQLException{
+        String query = "INSERT INTO ADMINISTRADOR VALUES(?,?,?,?)";
+        
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,getCodigo());
+            st.setString(2,getNombre());
+            st.setString(3,getDpi()); 
+            st.setString(4,getPassword());
+            //Ejecuta el insert
+            st.execute();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+        
+    }
     
     
     

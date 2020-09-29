@@ -8,6 +8,7 @@ package Entidades;
 import MYSQL.Conexion;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -28,8 +29,9 @@ public class Medico {
     private LocalTime hora_salida;
     private LocalDate fecha_inicio;
     private String password;
+    private String nombre_especialidad;
 
-    public Medico(String codigo, String nombre, String numero_colegiado, String dpi, String telefono, String email, LocalTime hora_entrada, LocalTime hora_salida, LocalDate fecha_inicio, String password) {
+    public Medico(String codigo, String nombre, String numero_colegiado, String dpi, String telefono, String email, LocalTime hora_entrada, LocalTime hora_salida, LocalDate fecha_inicio, String password, String nombre_especialidad) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.numero_colegiado = numero_colegiado;
@@ -40,6 +42,7 @@ public class Medico {
         this.hora_salida = hora_salida;
         this.fecha_inicio = fecha_inicio;
         this.password = password;
+        this.nombre_especialidad = nombre_especialidad;
     }
 
     public void setCodigo(String codigo) {
@@ -82,6 +85,10 @@ public class Medico {
         this.password = password;
     }
 
+    public void setNombre_especialidad(String nombre_especialidad) {
+        this.nombre_especialidad = nombre_especialidad;
+    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -121,7 +128,11 @@ public class Medico {
     public String getPassword() {
         return password;
     }
-    
+
+    public String getNombre_especialidad() {
+        return nombre_especialidad;
+    }
+       
     public void insertarMedico() throws SQLException{
         String query = "INSERT INTO MEDICO VALUES(?,?,?,?,?,?,?,?,?,?)";
         
@@ -141,10 +152,37 @@ public class Medico {
             //Ejecuta el insert
             st.execute();
             st.close();
+            verificarEspecialidad();
         } catch (SQLException e) {
             System.out.println("Error "+e);
         }
         
+    }
+    
+    
+    public void verificarEspecialidad(){
+        String query = "SELECT nombre FROM ESPECIALIDAD WHERE nombre=?";
+        
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,getNombre_especialidad());
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            if (!rs.next())
+                {
+                    Especialidad esp = new Especialidad(getNombre_especialidad());
+                    esp.insertarEspecialidad();
+                    Especializacion espz = new Especializacion(getNombre_especialidad(), getCodigo());
+                    espz.insertarEspecializacion();
+                }else{
+                    Especializacion espz = new Especializacion(getNombre_especialidad(), getCodigo());
+                    espz.insertarEspecializacion();
+                }
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
     }
     
     

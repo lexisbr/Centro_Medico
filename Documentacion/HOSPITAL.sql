@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS INFORME_CONSULTA (
 );
 
 -- -----------------------------------------------------
--- Tabla INFORME_EXAMEN
+-- Tabla INFORME_EXAMEN 
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS INFORME_EXAMEN (
   `codigo` VARCHAR(45) NOT NULL,

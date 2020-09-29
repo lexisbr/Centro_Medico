@@ -5,11 +5,19 @@
  */
 package Entidades;
 
+import Funcionalidades.Encriptador;
 import MYSQL.Conexion;
+import com.google.protobuf.Message;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Base64;
+import javax.swing.JOptionPane;
+import sun.jvm.hotspot.ui.action.ShowAction;
 import sun.jvm.hotspot.utilities.soql.SOQLException;
 
 /**
@@ -120,12 +128,19 @@ public class Paciente {
     public String getPassword() {
         return password;
     }
+   
     
-    public void insertarPaciente() throws SQLException{
+        
+    /*
+        Metodo para insertar un paciente nuevo.
+    */
+    public void insertarPaciente() throws SQLException, UnsupportedEncodingException{
+        
         String query = "INSERT INTO PACIENTE VALUES(?,?,?,?,?,?,?,?,?,?)";
         
-        try { 
+        try {
             //Se establecen los parametros del PreparedStament
+            setPassword(Encriptador.encriptar(getPassword()));
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
             st.setString(1,getCodigo());
             st.setString(2,getNombre());

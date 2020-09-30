@@ -58,10 +58,12 @@ public class Login {
     */
     public boolean verificarUsuario() throws SQLException, UnsupportedEncodingException{
         //Verifica si el usuario existe
-        if(verificarExistenciaUsuario()){
-            //Verifica si la contrasenia es correcta
-            if(verificarPassword()){
-                return true;
+        if(!getTipo_usuario().equals("0")){
+            if(verificarExistenciaUsuario()){
+                //Verifica si la contrasenia es correcta
+                if(verificarPassword()){
+                    return true;
+                }
             }
         }
         return false;
@@ -83,12 +85,10 @@ public class Login {
                 {
                     //Si el resulset esta vacio significa que no existe usuario.
                     st.close();
-                    JOptionPane.showMessageDialog(null,"No existe");
                     return false;
                 }else{
                     //Si contiene algo si existe usuario
                     st.close();
-                    JOptionPane.showMessageDialog(null,"Usuario correcto");
                     return true;
                 }          
         } catch (SQLException e) {
@@ -118,10 +118,8 @@ public class Login {
             st.close();
             //Verificamos que la contrasenia guardada sea igual a la contrasenia ingresada
             if(passwordDescifrada.equals(getPassword())){
-                JOptionPane.showMessageDialog(null,"Contraseña correcta");
                 return true;
             }else{
-                JOptionPane.showMessageDialog(null,"Contraseña incorrecta");
                 return false;
             }
         } catch (SQLException e) {

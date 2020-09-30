@@ -81,6 +81,11 @@ public class Cita_medica {
     public int getConsulta_codigo() {
         return consulta_codigo;
     }
+    
+    public void comprobarDisponibilidad(){
+        
+        
+    }
    
     public void insertarCita_medica() throws SQLException{
         String query = "INSERT INTO CITA_MEDICA VALUES(?,?,?,?,?,?)";

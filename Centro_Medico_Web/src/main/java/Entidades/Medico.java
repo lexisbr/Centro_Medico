@@ -5,7 +5,9 @@
  */
 package Entidades;
 
+import Funcionalidades.Encriptador;
 import MYSQL.Conexion;
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -133,10 +135,12 @@ public class Medico {
         return nombre_especialidad;
     }
        
-    public void insertarMedico() throws SQLException{
+    public void insertarMedico() throws SQLException, UnsupportedEncodingException{
         String query = "INSERT INTO MEDICO VALUES(?,?,?,?,?,?,?,?,?,?)";
         
-        try { 
+        try {
+            //Se encripta la password
+            setPassword(Encriptador.encriptar(getPassword()));
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
             st.setString(1,getCodigo());

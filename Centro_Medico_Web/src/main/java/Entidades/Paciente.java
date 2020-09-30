@@ -13,8 +13,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Base64;
 import javax.swing.JOptionPane;
 import sun.jvm.hotspot.ui.action.ShowAction;
@@ -47,6 +49,10 @@ public class Paciente {
         this.tipo_sangre = tipo_sangre;
         this.email = email;
         this.password = password;
+    }
+    
+    public Paciente(String codigo){
+        this.codigo = codigo;
     }
 
     public void setCodigo(String codigo) {
@@ -139,8 +145,9 @@ public class Paciente {
         String query = "INSERT INTO PACIENTE VALUES(?,?,?,?,?,?,?,?,?,?)";
         
         try {
-            //Se establecen los parametros del PreparedStament
+            //Se encripta la password
             setPassword(Encriptador.encriptar(getPassword()));
+            //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
             st.setString(1,getCodigo());
             st.setString(2,getNombre());
@@ -159,6 +166,29 @@ public class Paciente {
             System.out.println("Error "+e);
         }
         
+    }
+    
+    public void consultarDatos(){
+        String query = "SELECT * FROM PACIENTE WHERE codigo=?";
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,getCodigo());
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                setNombre(rs.getString(2));
+                setSexo(rs.getString(3));
+                setFecha_nacimiento(rs.getDate(4).toLocalDate());
+                setDpi(rs.getString(5));
+                setTelefono(rs.getString(6));
+                setPeso(rs.getString(7));
+                setTipo_sangre(rs.getString(8));
+                setEmail(rs.getString(9));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
     }
     
     

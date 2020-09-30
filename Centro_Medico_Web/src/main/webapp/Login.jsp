@@ -20,7 +20,7 @@
             <img class="logo" src="img/logo.png" alt="Logo hospital">
             <h1>Centro Medico</h1>
              <%Conexion.iniciarConexion();
-                if(request.getAttribute("message")!=null){%>
+                if(session.getAttribute("message")!=null){%>
                     <h3 class="error">Las credenciales no son validas.</h3>
                 <%
                 }

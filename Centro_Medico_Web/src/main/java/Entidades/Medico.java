@@ -33,6 +33,7 @@ public class Medico {
     private String password;
     private String nombre_especialidad;
 
+
     public Medico(String codigo, String nombre, String numero_colegiado, String dpi, String telefono, String email, LocalTime hora_entrada, LocalTime hora_salida, LocalDate fecha_inicio, String password, String nombre_especialidad) {
         this.codigo = codigo;
         this.nombre = nombre;
@@ -45,6 +46,10 @@ public class Medico {
         this.fecha_inicio = fecha_inicio;
         this.password = password;
         this.nombre_especialidad = nombre_especialidad;
+    }
+    
+    public Medico(){
+        
     }
 
     public void setCodigo(String codigo) {
@@ -134,6 +139,11 @@ public class Medico {
     public String getNombre_especialidad() {
         return nombre_especialidad;
     }
+
+    
+    /*
+        METODO PARA INSERTAR MEDICO
+    */
        
     public void insertarMedico() throws SQLException, UnsupportedEncodingException{
         String query = "INSERT INTO MEDICO VALUES(?,?,?,?,?,?,?,?,?,?)";
@@ -163,6 +173,9 @@ public class Medico {
         
     }
     
+    /*
+        METODO PARA GUARDAR LA ESPECIALIDAD DEL MEDICO, SINO EXISTE LA CREA
+    */
     
     public void verificarEspecialidad(){
         String query = "SELECT nombre FROM ESPECIALIDAD WHERE nombre=?";
@@ -190,5 +203,22 @@ public class Medico {
     }
     
     
+    /*
+        METODO PARA BUSCAR MEDICO
+    */
+    public ResultSet buscadorNombre(String nombre){
+        String query = "SELECT * FROM MEDICO WHERE nombre=?";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,nombre);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+            
+        } catch (Exception e) {
+            return null;
+        }   
+    }
     
 }

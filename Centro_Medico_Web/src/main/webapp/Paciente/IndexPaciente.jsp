@@ -26,52 +26,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Home | Centro Medico</title>
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body id="index">
-      <!--HEADER-->
-      <header id="encabezado">
-          <h1>
-              <img id="logoEncabezado" src="img/logo.png" alt="logo">
-          </h1>
-      </header>
-      
-      <!--NAVIGATION-->
-      <nav class="navbar">
-          <ul class="menu">
-              <li><a href="#">Agendar</a>
-                  <ul class="submenu">
-                      <li><a href="Paciente/AgendarConsulta.jsp">Consulta</a></li>
-                      <li><a href="#">Examen de Laboratorio</a></li>
-                  </ul>
-              </li>
-              <li><a href="#">Citas Programadas</a>
-                  <ul class="submenu">
-                      <li><a href="">Consultas</a></li>
-                      <li><a href="#">Examenes de Laboratorio</a></li>
-                  </ul>
-              </li>
-              <li><a href="#">Informacion</a>
-                  <ul class="submenu">
-                      <li><a href="#">Buscar medico</a></li>
-                      <li><a href="#">Mi historial medico</a></li>
-                  </ul>
-              </li>
-              <li><a href="#">Reportes</a>
-                  <ul class="submenu">
-                      <li><a href="#">Examenes realizados</a></li>
-                      <li><a href="#">Consultas realizadas</a></li>
-                  </ul>
-              </li>
-          </ul>
-      </nav>
-
+   
+       <%@include file="Encabezado.html" %>
       <!--Informacion de usuario-->
-      <section class="contenido">
-          <h2 class="title">Informacion de Usuario</h2>
+      <section class="contenidoLex">
+          <h2 class="titleLex">Informacion de Usuario</h2>
           <%String codigo = String.valueOf(session.getAttribute("user"));
             Paciente paciente = new Paciente(codigo);
             paciente.consultarDatos();%>

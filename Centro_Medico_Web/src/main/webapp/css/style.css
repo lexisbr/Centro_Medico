@@ -184,7 +184,7 @@ ESTLO DE INDEX
   height: 200px;
 }
 
-.navbar{
+.navbarLex{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -194,22 +194,22 @@ ESTLO DE INDEX
 
 }
 
-.navbar ul{
+.navbarLex ul{
   list-style: none;
 }
 
-.menu > li{
+.menuLex > li{
   color: black;
   position: relative;
   display: inline-block;
 }
 
-.menu li a:hover{
+.menuLex li a:hover{
   color: #004BF7;
   transition: all .1s;
 }
 
-.menu >li>a{
+.menuLex >li>a{
   text-transform: uppercase;
   display: block;
 	padding: 12px 30px;
@@ -218,7 +218,7 @@ ESTLO DE INDEX
 	text-decoration: none;
 }
 
-.submenu{
+.submenuLex{
   position: absolute;
   background: #333333;
   width: 100%;
@@ -227,7 +227,7 @@ ESTLO DE INDEX
   transition: opacity 1.5s;
 }
 
-.submenu li a{
+.submenuLex li a{
   display: block;
   padding: 15px;
   color: #fff;
@@ -235,23 +235,23 @@ ESTLO DE INDEX
   text-decoration: none;
 }
 
-.menu li:hover .submenu{
+.menuLex li:hover .submenuLex{
     visibility: visible;
     opacity: 1;
 }
 
-.contenido{
+.contenidoLex{
   padding: 50px 0;
   background:  #013FFF;
   color: white;
   
 }
 
-.title{
+.titleLex{
   margin-bottom: 20px;
   font-size: 40px;
 }
-.contenido h1{
+.contenidoLex h1{
   text-align: left;
   margin-left: 200px;
 }

@@ -30,7 +30,7 @@ public class RedireccionarLogin extends HttpServlet {
         String paginaDestino="Login.jsp";
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        
+        HttpSession session = request.getSession();
         String user, password, tipo;
         user = request.getParameter("user");
         password = request.getParameter("password");
@@ -39,13 +39,14 @@ public class RedireccionarLogin extends HttpServlet {
         try {
             if(ingresar.verificarUsuario()){
              // response.sendRedirect("index.jsp");
-                HttpSession session = request.getSession();
+               
                 session.setAttribute("user",user);
                 request.setAttribute("user", user);
                 System.out.println(String.valueOf(session.getAttribute("user")));
                 if(tipo.equals("PACIENTE")){
                     paginaDestino = "Paciente/IndexPaciente.jsp"; 
                     request.setAttribute("message", null);
+                    session.setAttribute("message",null);
                 }else if(tipo.equals("MEDICO")){
                     
                 }else if(tipo.equals("LABORATORISTA")){
@@ -58,9 +59,9 @@ public class RedireccionarLogin extends HttpServlet {
             }else{
                String mensaje = "Error";
                request.setAttribute("message",mensaje);
+               session.setAttribute("message",mensaje);
             }
-            RequestDispatcher disp = request.getRequestDispatcher(paginaDestino);
-            disp.forward(request, response);
+            response.sendRedirect(paginaDestino);
             
         } catch (SQLException ex) {
             Logger.getLogger(RedireccionarLogin.class.getName()).log(Level.SEVERE, null, ex);

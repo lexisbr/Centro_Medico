@@ -31,7 +31,8 @@
       <!--Informacion de usuario-->
       <section class="contenidoLex">
           <h2 class="titleLex">Informacion de Usuario</h2>
-          <%String codigo = String.valueOf(session.getAttribute("user"));
+          <%
+            String codigo = String.valueOf(session.getAttribute("user"));
             Paciente paciente = new Paciente(codigo);
             paciente.consultarDatos();%>
           <h1>DPI: <%=paciente.getDpi()%><h1>  

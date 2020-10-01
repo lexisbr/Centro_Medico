@@ -202,23 +202,10 @@ public class Medico {
         }
     }
     
-    
-    /*
-        METODO PARA BUSCAR MEDICO
-    */
-    public ResultSet buscadorNombre(String nombre){
-        String query = "SELECT * FROM MEDICO WHERE nombre=?";
-        try {
-            //Se establecen los parametros del PreparedStament
-            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
-            st.setString(1,nombre);
-            //Ejecuta el select
-            ResultSet rs = st.executeQuery();
-            return rs;
-            
-        } catch (Exception e) {
-            return null;
-        }   
-    }
-    
+  
+     
+     
+     
 }
+
+    

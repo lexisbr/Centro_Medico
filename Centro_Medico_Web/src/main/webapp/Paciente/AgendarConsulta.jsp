@@ -79,13 +79,17 @@
                                          String consulta_codigo = codigo_consulta.obtenerCodigoConsulta();
                                          Cita_medica agendar_cita = new Cita_medica(0, LocalDate.parse(fecha), LocalTime.parse(hora), usuario, codigo_medico, Integer.parseInt(consulta_codigo));
                                          agendar_cita.insertarCita_medica();
+                                         %>
+                                         
+                                         <h1>Cita registrada con exito</h1>
+                                        <%
                                      }
                                          
                                      } catch (Exception e) {
                                      }
                              %>
-
-                         <input type="submit" value="Guardar" class="guardar"/>
+                             <input type="submit" value="Guardar" class="guardar"/>
+                         
                      </form>
                      <% }
                      }catch(Exception e) {

@@ -279,7 +279,7 @@ ESTLO DE INDEX
   float: left;
 }
 
-.container #start{
+.container #fecha{
   margin: 0;
   margin-right: 15px;
   padding: 6px 6px 6px;
@@ -354,3 +354,8 @@ ESTLO DE INDEX
    margin-top: 10px;
 }
 
+.container .guardar{
+   height: 100px;
+   width: 400px;
+   margin-left: 50px;
+}

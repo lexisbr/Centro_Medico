@@ -8,6 +8,7 @@ package Entidades;
 import MYSQL.Conexion;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 
@@ -23,6 +24,10 @@ public class Consulta {
     public Consulta(int codigo, double costo, String nombre_especialidad) {
         this.codigo = codigo;
         this.costo = costo;
+        this.nombre_especialidad = nombre_especialidad;
+    }
+    
+    public Consulta(String nombre_especialidad){
         this.nombre_especialidad = nombre_especialidad;
     }
 
@@ -63,6 +68,27 @@ public class Consulta {
             st.close();
         } catch (SQLException e) {
             System.out.println("Error "+e);
+        }
+        
+    }
+    
+    public String obtenerCodigoConsulta(){
+        String query = "SELECT codigo FROM CONSULTA WHERE nombre_especialidad=?";
+        String codigo = "";
+        
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,getNombre_especialidad());
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {                
+                codigo=rs.getString("codigo");
+            }
+            return codigo;
+            
+        } catch (Exception e) {
+            return null;
         }
         
     }

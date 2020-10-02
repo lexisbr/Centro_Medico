@@ -1,3 +1,6 @@
+<%@page import="java.time.LocalTime"%>
+<%@page import="Entidades.Cita_medica"%>
+<%@page import="Entidades.Consulta"%>
 <%@page import="Funcionalidades.BuscadorCitas"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.Date"%>
@@ -13,9 +16,9 @@
       <%@include file="Encabezado.html" %>
       <% try {
          String usuario = String.valueOf(session.getAttribute("user"));
-         String codigo = request.getParameter("codigo");
+         String codigo_medico = request.getParameter("codigo");
          BuscadorMedico medico = new BuscadorMedico();
-         ResultSet rs = medico.selectMedico(codigo);
+         ResultSet rs = medico.selectMedico(codigo_medico);
          while (rs.next()) { %>
          <section class="contenidoLex">
              <div class="container">
@@ -25,7 +28,7 @@
                      <form action="" method="post" class="form-control" style="width: 500px; height: 700px; background: #ccccff;">
                          <div class="form-group">
                              <h1>Codigo de medico</h1>
-                             <input type="text" readonly="" class="form-control" value="<%= rs.getString("codigo")%>"/>
+                             <input type="text" readonly="" name="codigo_medico" class="form-control" value="<%= rs.getString("codigo")%>"/>
                          </div>
                          <div class="form-group">
                              <h1>Nombre de medico</h1>
@@ -33,7 +36,7 @@
                          </div>
                          <div class="form-group">
                              <h1>Especialidad</h1>
-                             <input type="text" readonly="" class="form-control" value="<%= rs.getString("especialidad_nombre")%>"/>
+                             <input type="text" readonly="" name="nombre_especialidad" class="form-control" value="<%= rs.getString("especialidad_nombre")%>"/>
                          </div>
                          <div class="form-group">
                              <h1>Precio de consulta</h1>
@@ -41,7 +44,7 @@
                          </div>
                          <div class="form-group">
                              <h1>Codigo de Paciente</h1>
-                             <input type="text" readonly="" class="form-control" value="<%= usuario%>"/>
+                             <input type="text" readonly=""  name="codigo_paciente" class="form-control" value="<%= usuario%>"/>
                          </div>
                          <div class="form-group">
                              <h1>Fecha</h1>
@@ -50,7 +53,8 @@
                              
                          </div>
                          <div class="form-group">
-                             <select class="custom-select">
+                             <select class="custom-select" name="tiempo">
+                                 <option value="no_verificado">No ha verificado la disponibilidad</option>
                                  <%
                                      if(request.getParameter("fecha_ingresada")!=null){
                                      String fecha = request.getParameter("fecha");
@@ -58,18 +62,30 @@
                                      ArrayList horasDisponibles = new ArrayList(busc.citasMedicasDisponibles());
 
                                      for (int i = 0; i < horasDisponibles.size(); i++) {%>
-                                     <option value="hora"><%=horasDisponibles.get(i)%></option>
+                                     <option value="<%=horasDisponibles.get(i)%>"><%=horasDisponibles.get(i)%></option>
                                     <% }
                                     }
 
                                  %>
                              </select>
                          </div>
+                             <%
+                                 try {
+                                      if (!request.getParameter("tiempo").equals("no_verificado")) {
+                                         String fecha = request.getParameter("fecha");
+                                         String hora = request.getParameter("tiempo");
+                                         String consulta = request.getParameter("nombre_especialidad");
+                                         Consulta codigo_consulta = new Consulta(consulta);
+                                         String consulta_codigo = codigo_consulta.obtenerCodigoConsulta();
+                                         Cita_medica agendar_cita = new Cita_medica(0, LocalDate.parse(fecha), LocalTime.parse(hora), usuario, codigo_medico, Integer.parseInt(consulta_codigo));
+                                         agendar_cita.insertarCita_medica();
+                                     }
+                                         
+                                     } catch (Exception e) {
+                                     }
+                             %>
 
-                         <br>
-                         <div class="btn-guardar">
                          <input type="submit" value="Guardar" class="guardar"/>
-                         </div>
                      </form>
                      <% }
                      }catch(Exception e) {

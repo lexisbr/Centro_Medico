@@ -38,10 +38,7 @@ public class RedireccionarLogin extends HttpServlet {
         tipo = request.getParameter("tipo");
         Login ingresar = new Login(user,password,tipo);
         try {
-            System.out.println(user+" aaa "+password+" "+tipo);
             if(ingresar.verificarUsuario()){
-             // response.sendRedirect("index.jsp");
-                
                 session.setAttribute("user",user);
                 request.setAttribute("user", user);
                 if(tipo.equals("PACIENTE")){
@@ -58,7 +55,6 @@ public class RedireccionarLogin extends HttpServlet {
                 
                 
             }else{
-                System.out.println("entra a else");
                String mensaje = "Error";
                request.setAttribute("message",mensaje);
                session.setAttribute("message",mensaje);

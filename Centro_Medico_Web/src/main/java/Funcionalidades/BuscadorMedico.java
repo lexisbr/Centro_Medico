@@ -16,6 +16,8 @@ import java.sql.SQLException;
  */
 public class BuscadorMedico {
     
+    
+    
     /*
         METODO PARA MOSTRAR TODOS LOS MEDICOS
     */
@@ -29,7 +31,7 @@ public class BuscadorMedico {
             ResultSet rs = st.executeQuery();
             return rs;
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             return null;
         }   
     }
@@ -75,8 +77,8 @@ public class BuscadorMedico {
         METODO PARA BUSCAR MEDICO POR HORA
     */
     
-     public ResultSet buscadorHora(String nombre) throws SQLException{
-        String query = "SELECT M.*,E.especialidad_nombre FROM MEDICO M INNER JOIN ESPECIALIZACION E ON M.codigo=E.medico_codigo WHERE hora_salida>='"+nombre+"' AND '"+nombre+"'>=hora_entrada";
+     public ResultSet buscadorHora(String hora) throws SQLException{
+        String query = "SELECT M.*,E.especialidad_nombre FROM MEDICO M INNER JOIN ESPECIALIZACION E ON M.codigo=E.medico_codigo WHERE hora_salida>='"+hora+"' AND '"+hora+"'>=hora_entrada";
          
         try {
             //Se establecen los parametros del PreparedStament

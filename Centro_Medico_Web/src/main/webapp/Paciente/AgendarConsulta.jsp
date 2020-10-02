@@ -1,9 +1,6 @@
-<%-- 
-    Document   : AgendarCita
-    Created on : 30/09/2020, 02:56:58
-    Author     : lex
---%>
-
+<%@page import="Funcionalidades.BuscadorCitas"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.sql.Date"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="Funcionalidades.BuscadorMedico"%>
 <%@page import="java.sql.ResultSet"%>
@@ -48,18 +45,31 @@
                          </div>
                          <div class="form-group">
                              <h1>Fecha</h1>
-                             <input type="date" id="start" name="trip-start" value="<%=LocalDate.now()%>" min="2018-01-01" max="2022-01-01">
-                             <input type="submit" value="Verificar disponibilidad" class="btn btn-outline-info"/>
+                             <input type="date" name="fecha" value="<%=request.getParameter("fecha")%>" min="2018-01-01" max="2022-01-01">
+                             <button type="submit" class="btn btn-outline-info" name="fecha_ingresada">Verificar disponibilidad</button>
+                             
                          </div>
                          <div class="form-group">
                              <select class="custom-select">
-                                 <option selected>Seleccione hora</option>
-                                 <option value="1">One</option>
+                                 <%
+                                     if(request.getParameter("fecha_ingresada")!=null){
+                                     String fecha = request.getParameter("fecha");
+                                     BuscadorCitas busc = new BuscadorCitas("codigo1",Date.valueOf(fecha));
+                                     ArrayList horasDisponibles = new ArrayList(busc.citasMedicasDisponibles());
+
+                                     for (int i = 0; i < horasDisponibles.size(); i++) {%>
+                                     <option value="hora"><%=horasDisponibles.get(i)%></option>
+                                    <% }
+                                    }
+
+                                 %>
                              </select>
                          </div>
 
                          <br>
-                         <input type="submit" value="Guardar" class="btn btn-primary btn-lg"/>
+                         <div class="btn-guardar">
+                         <input type="submit" value="Guardar" class="guardar"/>
+                         </div>
                      </form>
                      <% }
                      }catch(Exception e) {

@@ -84,6 +84,7 @@ public class Login {
             if (!rs.next())
                 {
                     //Si el resulset esta vacio significa que no existe usuario.
+                    System.out.println("result set vacio");
                     st.close();
                     return false;
                 }else{

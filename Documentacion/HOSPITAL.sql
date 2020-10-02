@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS CONSULTA (
 -- Tabla CITA_MEDICA
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS 	CITA_MEDICA (
-  `codigo` VARCHAR(45) NOT NULL,
+  `codigo` INT NOT NULL AUTO_INCREMENT,
   `fecha` DATE NOT NULL,
   `hora` TIME NOT NULL,
   `paciente_codigo` VARCHAR(45) NOT NULL,

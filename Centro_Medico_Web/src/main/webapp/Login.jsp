@@ -4,6 +4,14 @@
     Author     : lex
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.sql.Date"%>
+<%@page import="Funcionalidades.BuscadorCitas"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="Entidades.Medico"%>
+<%@page import="java.time.LocalTime"%>
+<%@page import="Entidades.Paciente"%>
+<%@page import="java.time.LocalDate"%>
 <%@page import="javax.swing.JOptionPane"%>
 <%@page import="jdk.nashorn.internal.scripts.JO"%>
 <%@page import="MYSQL.Conexion"%>
@@ -19,8 +27,12 @@
         <div class="login-box">
             <img class="logo" src="img/logo.png" alt="Logo hospital">
             <h1>Centro Medico</h1>
-            <%                   
-                Conexion.iniciarConexion();
+            <%  try {
+                    Conexion.iniciarConexion();
+                } catch (Exception e) {
+                    System.out.println("Error login "+e);
+                }
+                
                 if(session.getAttribute("message")!=null){%>
                     <h3 class="error">Las credenciales no son validas.</h3>
                 <%

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
+import javax.xml.soap.SOAPFault;
 
 /**
  *
@@ -37,12 +38,12 @@ public class RedireccionarLogin extends HttpServlet {
         tipo = request.getParameter("tipo");
         Login ingresar = new Login(user,password,tipo);
         try {
+            System.out.println(user+" aaa "+password+" "+tipo);
             if(ingresar.verificarUsuario()){
              // response.sendRedirect("index.jsp");
-               
+                
                 session.setAttribute("user",user);
                 request.setAttribute("user", user);
-                System.out.println(String.valueOf(session.getAttribute("user")));
                 if(tipo.equals("PACIENTE")){
                     paginaDestino = "Paciente/IndexPaciente.jsp"; 
                     request.setAttribute("message", null);
@@ -57,6 +58,7 @@ public class RedireccionarLogin extends HttpServlet {
                 
                 
             }else{
+                System.out.println("entra a else");
                String mensaje = "Error";
                request.setAttribute("message",mensaje);
                session.setAttribute("message",mensaje);

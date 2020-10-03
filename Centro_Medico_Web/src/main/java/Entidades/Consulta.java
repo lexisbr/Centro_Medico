@@ -30,6 +30,10 @@ public class Consulta {
     public Consulta(String nombre_especialidad){
         this.nombre_especialidad = nombre_especialidad;
     }
+    
+    public Consulta(int codigo){
+        this.codigo = codigo;
+    }
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
@@ -93,4 +97,37 @@ public class Consulta {
         
     }
     
+     public void consultarDatos(){
+        String query = "SELECT * FROM CONSULTA WHERE codigo=?";
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setInt(1,getCodigo());
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                setCosto(rs.getDouble("costo"));
+                setNombre_especialidad(rs.getString("nombre_especialidad"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+    }
+     
+     public void actualizarConsulta() throws SQLException{
+        String query = "UPDATE CONSULTA SET costo=? WHERE codigo=?";
+        
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setDouble(2,getCodigo());
+            st.setDouble(1,getCosto());
+            //Ejecuta el insert
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+        
+    } 
 }

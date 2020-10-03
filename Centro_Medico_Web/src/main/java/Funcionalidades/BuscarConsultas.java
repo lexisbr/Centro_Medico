@@ -14,14 +14,15 @@ import java.sql.SQLException;
  *
  * @author lex
  */
-public class BuscadorExamenes {
+public class BuscarConsultas {
     
+     
      /*
         METODO PARA MOSTRAR TODOS LOS EXAMENES
     */
     
-    public ResultSet mostrarExamenes(){
-        String query = "SELECT * FROM EXAMEN_LABORATORIO";
+    public ResultSet mostrarConsultas(){
+        String query = "SELECT * FROM CONSULTA";
         try {
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
@@ -40,7 +41,7 @@ public class BuscadorExamenes {
         METODO PARA BUSCAR EXAMENES POR NOMBRE
     */
     public ResultSet buscadorNombre(String nombre) throws SQLException{
-        String query = "SELECT * FROM EXAMEN_LABORATORIO WHERE nombre LIKE '%"+nombre+"%'";
+        String query = "SELECT * FROM CONSULTA WHERE nombre_especialidad LIKE '%"+nombre+"%'";
         try {
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
@@ -52,5 +53,4 @@ public class BuscadorExamenes {
             return null;
         }   
     }
-    
 }

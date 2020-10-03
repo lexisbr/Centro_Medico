@@ -10,14 +10,23 @@
 <html>
     <!-- Encabezado -->
       <%@include file="Encabezado.html" %>
-      <%
-          int examen_codigo = Integer.parseInt(request.getParameter("codigo"));
+      <% int examen_codigo;
+          
+          try {
+               examen_codigo = Integer.parseInt(request.getParameter("codigo"));
+          } catch (Exception e) {
+              String codigo = String.valueOf(session.getAttribute("codigo_examen"));
+               examen_codigo = Integer.parseInt(codigo);
+          }
+          
+          
+          
           Examen_laboratorio examen = new Examen_laboratorio(examen_codigo);
           examen.consultarDatos();
       %>
       <section class="contenidoLex">
           <div class="container">
-              <h2 class="titleLex" >Registrar Examen</h2>
+              <h2 class="titleLex" >Modificar Examen</h2>
               <hr>
               <div class="centrar">
                   <form action="ModificarExamen.jsp" method="post" class="form-control" style="width: 500px; height: 740px; background: #ccccff;">
@@ -96,7 +105,8 @@
                                   <h1>Examen se ha actualizado</h1>
                                   
                                   <%  
-                                  
+                                      response.sendRedirect("ModificarExamen.jsp");
+                                      session.setAttribute("codigo_examen",request.getParameter("codigo"));
                               }
 
                           } catch (Exception e) {

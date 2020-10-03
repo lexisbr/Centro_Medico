@@ -66,7 +66,7 @@
                       %>
 
                       <h1>Examen registrado con exito</h1>
-                      <%
+                      <% 
                               }
 
                           } catch (Exception e) {

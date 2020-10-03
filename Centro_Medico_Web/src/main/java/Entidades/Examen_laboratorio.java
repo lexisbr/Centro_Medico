@@ -152,7 +152,6 @@ public class Examen_laboratorio {
                 }
                 
                 setDescripcion(rs.getString(4));
-                System.out.println("descp "+getDescripcion());
                 setCosto(rs.getDouble(5));
                 setTipo_archivo(rs.getString(6));
             }

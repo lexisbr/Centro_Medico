@@ -75,9 +75,7 @@ public class ActualizarExamen extends HttpServlet {
             }
             
             Examen_laboratorio examen = new Examen_laboratorio(0,nombre_examen,requiereorden,descripcion,Double.parseDouble(costo),tipo_archivo);
-            examen.actualizarExamen_laboratorio();
             
-            RequestDispatcher dispatcher = request.getRequestDispatcher("")
             
              
                                   

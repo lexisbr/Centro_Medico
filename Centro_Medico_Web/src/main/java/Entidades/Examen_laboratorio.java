@@ -8,6 +8,7 @@ package Entidades;
 import MYSQL.Conexion;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 
@@ -16,14 +17,14 @@ import java.sql.Time;
  * @author lex
  */
 public class Examen_laboratorio {
-    private String codigo;
+    private int codigo;
     private String nombre;
     private boolean requiere_orden;
     private String descripcion;
     private double costo;
     private String tipo_archivo;
 
-    public Examen_laboratorio(String codigo, String nombre, boolean requiere_orden, String descripcion, double costo, String tipo_archivo) {
+    public Examen_laboratorio(int codigo, String nombre, boolean requiere_orden, String descripcion, double costo, String tipo_archivo) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.requiere_orden = requiere_orden;
@@ -31,8 +32,12 @@ public class Examen_laboratorio {
         this.costo = costo;
         this.tipo_archivo = tipo_archivo;
     }
+    
+    public Examen_laboratorio(int codigo){
+        this.codigo = codigo;
+    }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -56,7 +61,7 @@ public class Examen_laboratorio {
         this.tipo_archivo = tipo_archivo;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
@@ -86,7 +91,7 @@ public class Examen_laboratorio {
         try { 
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
-            st.setString(1,getCodigo());
+            st.setInt(1,getCodigo());
             st.setString(2,getNombre());
             if(isRequiere_orden()){
                 st.setInt(3,1);
@@ -103,7 +108,58 @@ public class Examen_laboratorio {
             System.out.println("Error "+e);
         }
         
-    }   
+    }
+    
+     public void actualizarExamen_laboratorio() throws SQLException{
+        String query = "UPDATE EXAMEN_LABORATORIO SET nombre=?, requiere_orden=?, descripcion=?, costo=?, tipo_archivo=? WHERE codigo=?";
+        
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setInt(6,getCodigo());
+            st.setString(1,getNombre());
+            if(isRequiere_orden()){
+                st.setInt(2,1);
+            }else{
+                st.setInt(2,0);
+            }
+            st.setString(3,getDescripcion());
+            st.setDouble(4,getCosto());
+            st.setString(5,getTipo_archivo());
+            //Ejecuta el insert
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+        
+    }
+    
+    public void consultarDatos(){
+        String query = "SELECT * FROM EXAMEN_LABORATORIO WHERE codigo=?";
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setInt(1,getCodigo());
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                setNombre(rs.getString(2));
+                if(rs.getInt(3)==1){
+                    setRequiere_orden(true);
+                }else{
+                    setRequiere_orden(false);
+                }
+                
+                setDescripcion(rs.getString(4));
+                System.out.println("descp "+getDescripcion());
+                setCosto(rs.getDouble(5));
+                setTipo_archivo(rs.getString(6));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+    }
     
     
     

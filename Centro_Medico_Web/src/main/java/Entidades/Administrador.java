@@ -10,6 +10,7 @@ import MYSQL.Conexion;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 
@@ -28,6 +29,11 @@ public class Administrador {
         this.nombre = nombre;
         this.dpi = dpi;
         this.password = password;
+    }
+    
+    public Administrador(String codigo){
+        this.codigo = codigo;
+
     }
 
     public void setCodigo(String codigo) {
@@ -82,6 +88,23 @@ public class Administrador {
             System.out.println("Error "+e);
         }
         
+    }
+    
+    public void consultarDatos(){
+        String query = "SELECT * FROM ADMINISTRADOR WHERE codigo=?";
+        try { 
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,getCodigo());
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                setNombre(rs.getString("nombre"));
+                setDpi(rs.getString("dpi"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
     }
     
     

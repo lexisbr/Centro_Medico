@@ -24,12 +24,12 @@ public class BuscadorCitas {
 
     private Time hora_entrada;
     private Time hora_salida;
-    private String codigo_medico;
+    private String codigo;
     private Date fecha;
     private final SimpleDateFormat formato_tiempo = new SimpleDateFormat("hh:mm");
 
-    public BuscadorCitas(String codigo_medico, Date fecha) {
-        this.codigo_medico = codigo_medico;
+    public BuscadorCitas(String codigo, Date fecha) {
+        this.codigo = codigo;
         this.fecha = fecha;
     }
     
@@ -41,8 +41,8 @@ public class BuscadorCitas {
         this.hora_salida = hora_salida;
     }
 
-    public void setCodigo_medico(String codigo_medico) {
-        this.codigo_medico = codigo_medico;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public void setFecha(Date fecha) {
@@ -57,8 +57,8 @@ public class BuscadorCitas {
         return hora_salida;
     }
 
-    public String getCodigo_medico() {
-        return codigo_medico;
+    public String getCodigo() {
+        return codigo;
     }
 
     public Date getFecha() {
@@ -89,7 +89,7 @@ public class BuscadorCitas {
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
             st.setTime(1, Time.valueOf(LocalTime.parse(hora)));
             st.setDate(2, getFecha());
-            st.setString(3, getCodigo_medico());
+            st.setString(3, getCodigo());
             //Ejecuta el select
             ResultSet rs = st.executeQuery();
             return rs;
@@ -105,7 +105,7 @@ public class BuscadorCitas {
         try {
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
-            st.setString(1, getCodigo_medico());
+            st.setString(1, getCodigo());
             //Ejecuta el select
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -143,6 +143,47 @@ public class BuscadorCitas {
         return guardarHoras;
     }
     
+   public ArrayList citasExamenDisponibles() {
+        try {
+            ArrayList horasDisponibles = new ArrayList();
+            String hora ="";
+            for (int i = 0; i < 24; i++) {
+                if(i<=9){
+                    hora = "0"+i+":00";
+                }else{
+                    hora = i+":00";
+                }
+                if (!citasExamen(hora).next()) {
+                        System.out.println(hora);
+                        horasDisponibles.add(hora);
+                        
+                }
+            }
+            return horasDisponibles;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+   
+   public ResultSet citasExamen(String hora) {
+        String query = "SELECT * FROM CITA_EXAMEN WHERE hora=? AND fecha=? AND laboratorista_codigo=?";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setTime(1, Time.valueOf(LocalTime.parse(hora)));
+            st.setDate(2, getFecha());
+            st.setString(3, getCodigo());
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+             System.out.println("Error cita examen "+e);
+        }
+
+        return null;
+    }
+   
+
 }
 
     

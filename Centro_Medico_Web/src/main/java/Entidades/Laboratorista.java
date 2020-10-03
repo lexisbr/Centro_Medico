@@ -10,6 +10,7 @@ import MYSQL.Conexion;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -41,7 +42,11 @@ public class Laboratorista {
         this.password = password;
         this.examen_laboratorio_codigo = examen_laboratorio_codigo;
     }
-
+    
+    public Laboratorista(){
+    
+    }
+    
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
@@ -139,5 +144,25 @@ public class Laboratorista {
             System.out.println("Error "+e);
         }
         
+    }
+    
+    public String obtenerCodigoLaboratorista(String codigo_examen) {
+        String query = "SELECT codigo FROM LABORATORISTA WHERE examen_laboratorio_codigo=?";
+        String codigo = "";
+
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1, codigo_examen);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                codigo = rs.getString("codigo");
+            }
+            return codigo;
+
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }

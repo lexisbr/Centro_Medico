@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS MEDICO (
 -- Tabla EXAMEN_LABORATORIO
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS EXAMEN_LABORATORIO (
-  `codigo` VARCHAR(45) NOT NULL,
+  `codigo` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NOT NULL,
   `requiere_orden` TINYINT(1) NOT NULL,
   `descripcion` VARCHAR(300) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS LABORATORISTA (
   `email` VARCHAR(100) NOT NULL,
   `fecha_inicio` DATE NOT NULL,
   `password` VARCHAR(200) NOT NULL,
-  `examen_laboratorio_codigo` VARCHAR(45) NOT NULL,
+  `examen_laboratorio_codigo` INT NOT NULL,
   PRIMARY KEY (`codigo`),
       FOREIGN KEY (`examen_laboratorio_codigo`) REFERENCES EXAMEN_LABORATORIO (`codigo`)
 );
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS CITA_EXAMEN (
 -- Tabla INFORME_CONSULTA
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS INFORME_CONSULTA (
-  `codigo` VARCHAR(45) NOT NULL,
+  `codigo` INT NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(300) NOT NULL,
   `fecha` DATE NOT NULL,
   `hora` TIME NOT NULL,
@@ -151,11 +151,11 @@ CREATE TABLE IF NOT EXISTS INFORME_CONSULTA (
 -- Tabla INFORME_EXAMEN 
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS INFORME_EXAMEN (
-  `codigo` VARCHAR(45) NOT NULL,
+  `codigo` INT NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(300) NOT NULL,
   `fecha` DATE NOT NULL,
   `hora` TIME NOT NULL,
-  `examen_laboratorio_codigo` VARCHAR(45) NOT NULL,
+  `examen_laboratorio_codigo` INT NOT NULL,
   `paciente_codigo` VARCHAR(45) NOT NULL,
   `laboratorista_codigo` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`codigo`),
@@ -169,7 +169,7 @@ CREATE TABLE IF NOT EXISTS INFORME_EXAMEN (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS ARCHIVO_INFORME(
 	`archivo` LONGBLOB NOT NULL,
-    `informe_examen_codigo` VARCHAR(45) NOT NULL,
+    `informe_examen_codigo` INT NOT NULL,
     PRIMARY KEY (`informe_examen_codigo`),
 		FOREIGN KEY (`informe_examen_codigo`) REFERENCES INFORME_EXAMEN(`codigo`)
 ); 
@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS ORDEN_EXAMEN(
   `descripcion` VARCHAR(150) NOT NULL,
   `medico_codigo` VARCHAR(45) NOT NULL,
   `paciente_codigo` VARCHAR(45) NOT NULL,
-  `examen_laboratorio_codigo` VARCHAR(45) NOT NULL,
+  `examen_laboratorio_codigo` INT NOT NULL,
   PRIMARY KEY (`codigo`),
 	FOREIGN KEY (`medico_codigo`) REFERENCES MEDICO (`codigo`),
     FOREIGN KEY (`paciente_codigo`) REFERENCES PACIENTE (`codigo`),

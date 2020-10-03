@@ -47,10 +47,13 @@ public class RedireccionarLogin extends HttpServlet {
                     session.setAttribute("message",null);
                 }else if(tipo.equals("MEDICO")){
                     
+                    
                 }else if(tipo.equals("LABORATORISTA")){
                     
                 }else if(tipo.equals("ADMINISTRADOR")){
-                    
+                    paginaDestino = "Administrador/IndexAdmin.jsp";
+                    request.setAttribute("message", null);
+                    session.setAttribute("message",null);
                 }
                 
                 

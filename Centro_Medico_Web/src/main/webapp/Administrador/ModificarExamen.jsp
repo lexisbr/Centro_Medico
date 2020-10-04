@@ -10,6 +10,11 @@
 <html>
     <!-- Encabezado -->
       <%@include file="Encabezado.html" %>
+      <script>
+        function alerta() {
+            alert("Actualizado con exito");
+        }
+      </script>
       <% int examen_codigo;
           
           try {
@@ -32,11 +37,11 @@
                   <form action="ModificarExamen.jsp" method="post" class="form-control" style="width: 500px; height: 740px; background: #ccccff;">
                       <div class="form-group">
                           <h1>Codigo</h1>
-                          <input type="text" readonly="" name="codigo" class="form-control" value="<%=examen.getCodigo()%>"/>
+                          <input type="text" readonly="" name="codigo" class="form-control" value="<%=examen.getCodigo()%>" required=""/>
                       </div>
                       <div class="form-group">
                           <h1>Nombre de examen</h1>
-                          <input type="text" name="nombre_examen" class="form-control" value="<%=examen.getNombre() %>"/>
+                          <input type="text" name="nombre_examen" class="form-control" value="<%=examen.getNombre() %>" required=""/>
                       </div>
                       <div class="radios" data-toggle="buttons">
                           <h1>Requiere orden</h1>
@@ -62,15 +67,15 @@
                       </div>
                       <div class="form-group">
                           <h1>Descripcion</h1>
-                          <textarea name="descripcion" class="textarea" rows="5" cols="40" style="width: 100%;" value=""><%=examen.getDescripcion()%></textarea>
+                          <textarea name="descripcion" class="textarea" rows="5" cols="40" style="width: 100%;" value="" required=""><%=examen.getDescripcion()%></textarea>
                       </div>
                       <div class="form-group">
                           <h1>Costo</h1>
-                          <input type="number" name="costo"  step="0.01" min="0" class="form-control" value="<%=examen.getCosto()%>"/>
+                          <input type="number" name="costo"  step="0.01" min="0" class="form-control" value="<%=examen.getCosto()%>" required=""/>
                       </div>
                       <div class="form-group">
                            <h1>Tipo de Archivo</h1>
-                          <input type="text" name="tipo_archivo" class="form-control" value="<%= examen.getTipo_archivo()%>"/>
+                          <input type="text" name="tipo_archivo" class="form-control" value="<%= examen.getTipo_archivo()%>" required=""/>
                       </div>
 
 
@@ -102,7 +107,9 @@
                                   examen.setTipo_archivo(tipo_archivo);
                                   examen.actualizarExamen_laboratorio();
                                   %>
-                                  <h1>Examen se ha actualizado</h1>
+                                  <div class="mensaje-exito">
+                                      <h1>Examen actualizado con exito</h1>
+                                  </div>
                                   
                                   <%  
                                       response.sendRedirect("ModificarExamen.jsp");
@@ -112,7 +119,7 @@
                           } catch (Exception e) {
                           }
                       %>
-                      <input type="submit" name="boton" value="Guardar" class="guardar"/>
+                      <input type="submit" name="boton" value="Guardar" class="guardar" onclick="alerta()"/>
 
                   </form>
               </div>

@@ -168,7 +168,7 @@ public class Paciente {
         
     }
     
-    public void consultarDatos(){
+    public void consultarDatos() throws UnsupportedEncodingException{
         String query = "SELECT * FROM PACIENTE WHERE codigo=?";
         try { 
             //Se establecen los parametros del PreparedStament
@@ -185,11 +185,40 @@ public class Paciente {
                 setPeso(rs.getString(7));
                 setTipo_sangre(rs.getString(8));
                 setEmail(rs.getString(9));
+                setPassword(Encriptador.desencriptar(rs.getString("password")));
             }
         } catch (SQLException e) {
             System.out.println("Error "+e);
         }
     }
     
-    
+     /*
+        Metodo para actualizar un paciente.
+    */
+    public void actualizarPaciente() throws SQLException, UnsupportedEncodingException{
+        String query = "UPDATE PACIENTE SET nombre=?, sexo=?, fecha_nacimiento=?, dpi=?, telefono=?, peso=?, tipo_sangre=?, email=?, password=? WHERE codigo=?";
+        
+        try {
+            //Se encripta la password
+            setPassword(Encriptador.encriptar(getPassword()));
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(10,getCodigo());
+            st.setString(1,getNombre());
+            st.setString(2,getSexo());
+            st.setDate(3,Date.valueOf(getFecha_nacimiento()));
+            st.setString(4,getDpi());
+            st.setString(5,getTelefono());
+            st.setString(6,getPeso());
+            st.setString(7,getTipo_sangre());
+            st.setString(8,getEmail());
+            st.setString(9,getPassword());
+            //Ejecuta el insert
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+        
+    }
 }

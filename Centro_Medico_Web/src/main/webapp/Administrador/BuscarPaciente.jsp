@@ -1,15 +1,21 @@
+<%-- 
+    Document   : BuscarPaciente
+    Created on : 3/10/2020, 18:52:40
+    Author     : lex
+--%>
+
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="Funcionalidades.BuscadorExamenes"%>
+<%@page import="Funcionalidades.BuscadorPaciente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
    <!--Encabezado-->
       <%@include file="Encabezado.html" %>
       <section class="contenidoLex">
-          <form action="BuscarExamen.jsp" method="POST">
+          <form action="BuscarPaciente.jsp" method="POST">
               <div class="wrap">
-                  <h2>Ingrese nombre de examen:</h2>
+                  <h2>Ingrese codigo de paciente:</h2>
                   <%@include file="SearchBar.html" %>
               </div>
 
@@ -18,28 +24,31 @@
                       <tr>
                           <th class="text-center">Codigo</th>
                           <th class="text-center">Nombre</th>
-                          <th class="text-center">Descripcion</th>
-                          <th class="text-center">Costo</th>
+                          <th class="text-center">Sexo</th>
+                          <th class="text-center">Fecha de Nacimiento</th>
+                          <th class="text-center">DPI</th>
                       </tr>
                       <% try {
                               String campo = request.getParameter("campo");
-                              BuscadorExamenes examen = new BuscadorExamenes();
+                              BuscadorPaciente paciente = new BuscadorPaciente();
                               ResultSet rs = null;
                               if (campo != null) {
-                                  rs = examen.buscadorNombre(campo);
+                                  rs = paciente.buscadorCodigo(campo);
                               } else {
-                                  rs = examen.mostrarExamenes();
+                                  rs = paciente.mostrarPacientes();
                                   }
 
-                              while (rs.next()) {
+                                  while (rs.next()) {
+                                   
                       %>
                       <tr>
                           <td class="text-center"><%=rs.getString("codigo")%> </td>
                           <td class="text-center"><%=rs.getString("nombre")%> </td>
-                          <td class="text-center"><%=rs.getString("descripcion")%> </td>
-                          <td class="text-center"><%=rs.getString("costo")%> </td>
+                          <td class="text-center"><%=rs.getString("sexo")%> </td>
+                          <td class="text-center"><%=rs.getString("fecha_nacimiento")%> </td>
+                          <td class="text-center"><%=rs.getString("dpi")%> </td>
                           <td>
-                              <a class="btn btn-warning btn-sm" href="ModificarExamen.jsp?codigo=<%=rs.getString("codigo")%>">Modificar</a>
+                              <a class="btn btn-warning btn-sm" href="ModificarPaciente.jsp?codigo=<%=rs.getString("codigo")%>">Modificar</a>
                           </td>
                       </tr>
                       <%

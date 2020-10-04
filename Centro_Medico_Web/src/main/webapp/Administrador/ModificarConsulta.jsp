@@ -10,6 +10,16 @@
 <html>
     <!-- Encabezado -->
       <%@include file="Encabezado.html" %>
+       <script>
+        function alerta(costo) {
+            if(costo===0){
+                alert("Llene todos los campos");
+            }else{
+                 alert("Actualizado con exito");
+            }
+            
+        }
+      </script>
       <% int consulta_codigo;
           
           try {
@@ -24,6 +34,7 @@
           Consulta consulta = new Consulta(consulta_codigo);
           consulta.consultarDatos();
       %>
+     
       <section class="contenidoLex">
           <div class="container">
               <h2 class="titleLex" >Modificar Consulta</h2>
@@ -32,15 +43,15 @@
                   <form action="ModificarConsulta.jsp" method="post" class="form-control" style="width: 500px; height: 400px; background: #ccccff;">
                       <div class="form-group">
                           <h1>Codigo</h1>
-                          <input type="text" readonly="" name="codigo" class="form-control" value="<%=consulta.getCodigo()%>"/>
+                          <input type="text" readonly="" name="codigo" class="form-control" value="<%=consulta.getCodigo()%>" required=""/>
                       </div>
                       <div class="form-group">
                           <h1>Especialidad</h1>
-                          <input type="text" readonly="" name="nombre_examen" class="form-control" value="<%=consulta.getNombre_especialidad()%>"/>
+                          <input type="text" readonly="" name="nombre_examen" class="form-control" value="<%=consulta.getNombre_especialidad()%>" required=""/>
                       </div>
                       <div class="form-group">
                           <h1>Costo</h1>
-                          <input type="number" name="costo"  step="0.01" min="0" class="form-control" value="<%=consulta.getCosto()%>"/>
+                          <input type="number" name="costo"  id="costo" step="0.01" min="0" class="form-control" value="<%=consulta.getCosto()%>" required=""/>
                       </div>
 
                       <% boolean resultado;
@@ -58,17 +69,20 @@
                                   consulta.setCosto(Double.parseDouble(costo));
                                   consulta.actualizarConsulta();
                                   %>
-                                  <h1>Examen se ha actualizado</h1>
+                                  <div class="mensaje-exito">
+                                      <h1>Consulta actualizado con exito</h1>
+                                  </div>
                                   
                                   <%  
                                       response.sendRedirect("ModificarConsulta.jsp");
                                       session.setAttribute("codigo_consulta",request.getParameter("codigo"));
+                                      
                               }
 
                           } catch (Exception e) {
                           }
                       %>
-                      <input type="submit" name="boton" value="Guardar" class="guardar"/>
+                      <input type="submit" name="boton" value="Guardar" class="guardar" onclick="alerta(<%=request.getParameter("costo")%>)"/>
 
                   </form>
               </div>

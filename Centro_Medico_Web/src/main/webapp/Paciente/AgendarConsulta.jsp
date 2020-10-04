@@ -48,7 +48,7 @@
                          </div>
                          <div class="form-group">
                              <h1>Fecha</h1>
-                             <input type="date" name="fecha" value="<%=request.getParameter("fecha")%>" min="2018-01-01" max="2022-01-01">
+                             <input type="date" name="fecha" value="<%=request.getParameter("fecha")%>" min="2018-01-01" max="2022-01-01" required="">
                              <button type="submit" class="btn btn-outline-info" name="fecha_ingresada">Verificar disponibilidad</button>
                              
                          </div>
@@ -80,8 +80,9 @@
                                          Cita_medica agendar_cita = new Cita_medica(0, LocalDate.parse(fecha), LocalTime.parse(hora), usuario, codigo_medico, Integer.parseInt(consulta_codigo));
                                          agendar_cita.insertarCita_medica();
                                          %>
-                                         
-                                         <h1>Cita registrada con exito</h1>
+                                         <div class="mensaje-exito">
+                                             <h1>Consulta registrada con exito</h1>
+                                         </div>
                                         <%
                                      }
                                          

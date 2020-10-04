@@ -84,7 +84,9 @@
                                         String lab = request.getParameter("codigo_laboratorista");
                             %>
 
-                            <h1>Cita registrada con exito</h1>
+                            <div class="mensaje-exito">
+                                <h1>Cita de registrada con exito</h1>
+                            </div>
                             <%
                                     }
 

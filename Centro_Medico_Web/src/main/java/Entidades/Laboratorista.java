@@ -30,9 +30,9 @@ public class Laboratorista {
     private String email;
     private LocalDate fecha_inicio;
     private String password;
-    private String examen_laboratorio_codigo;
+    private int examen_laboratorio_codigo;
 
-    public Laboratorista(String codigo, String nombre, String numero_registro, String dpi, String telefono, String email, LocalDate fecha_inicio, String password, String examen_laboratorio_codigo) {
+    public Laboratorista(String codigo, String nombre, String numero_registro, String dpi, String telefono, String email, LocalDate fecha_inicio, String password, int examen_laboratorio_codigo) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.numero_registro = numero_registro;
@@ -44,9 +44,14 @@ public class Laboratorista {
         this.examen_laboratorio_codigo = examen_laboratorio_codigo;
     }
     
+    public Laboratorista(String codigo){
+        this.codigo = codigo;
+        
+    }
     public Laboratorista(){
     
     }
+    
     
     public void setCodigo(String codigo) {
         this.codigo = codigo;
@@ -80,7 +85,7 @@ public class Laboratorista {
         this.password = password;
     }
 
-    public void setExamen_laboratorio_codigo(String examen_laboratorio_codigo) {
+    public void setExamen_laboratorio_codigo(int examen_laboratorio_codigo) {
         this.examen_laboratorio_codigo = examen_laboratorio_codigo;
     }
     
@@ -117,7 +122,7 @@ public class Laboratorista {
         return password;
     }
 
-    public String getExamen_laboratorio_codigo() {
+    public int getExamen_laboratorio_codigo() {
         return examen_laboratorio_codigo;
     }
     
@@ -137,7 +142,7 @@ public class Laboratorista {
             st.setString(6,getEmail());
             st.setDate(7,Date.valueOf(getFecha_inicio()));     
             st.setString(8,getPassword());
-            st.setString(9,getExamen_laboratorio_codigo());
+            st.setInt(9,getExamen_laboratorio_codigo());
             //Ejecuta el insert
             st.execute();
             st.close();
@@ -167,9 +172,69 @@ public class Laboratorista {
         }
     }
     
-    public void generarDias(ArrayList dias,String codigo) {
+    public void generarDias(ArrayList dias,String codigo) throws SQLException {
         for (int i = 0; i < dias.size(); i++) {
             Dias_trabajo nuevoDia=new Dias_trabajo(0, dias.get(i).toString(), codigo);
+            nuevoDia.insertarDias_trabajo();
+        }
+        
+    }
+    
+    /*
+        METODO PARA OBTENER DATOS DE PACIENTE
+    */
+    
+     public void consultarDatos() throws UnsupportedEncodingException {
+        String query = "SELECT * FROM LABORATORISTA WHERE codigo=?";
+        
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1, getCodigo());
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                setNombre(rs.getString(2));
+                setNumero_registro(rs.getString(3));
+                setDpi(rs.getString(4));
+                setTelefono(rs.getString(5));
+                setEmail(rs.getString(6));
+                setFecha_inicio(LocalDate.parse(rs.getString(7)));
+                setPassword(Encriptador.desencriptar(rs.getString("password")));
+                setExamen_laboratorio_codigo(rs.getInt("examen_laboratorio_codigo"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error " + e);
         }
     }
+     
+     /*
+        Metodo para actualizar un laboratorista.
+    */
+    public void actualizarLaboratorista() throws SQLException, UnsupportedEncodingException{
+        String query = "UPDATE LABORATORISTA SET nombre=?, numero_registro=?, dpi=?, telefono=?, email=?, fecha_inicio=?, password=?, examen_laboratorio_codigo=? WHERE codigo=?";
+        System.out.println("codigo :"+getCodigo());
+        try {
+            //Se encripta la password
+            setPassword(Encriptador.encriptar(getPassword()));
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(9,getCodigo());
+            st.setString(1,getNombre());
+            st.setString(2,getNumero_registro());
+            st.setString(3,getDpi());
+            st.setString(4,getTelefono());
+            st.setString(5,getEmail());
+            st.setDate(6,Date.valueOf(getFecha_inicio()));
+            st.setString(7,getPassword());
+            st.setInt(8,getExamen_laboratorio_codigo());
+            //Ejecuta el insert
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+    }
+    
+    
 }

@@ -14,14 +14,14 @@ import java.sql.SQLException;
  *
  * @author lex
  */
-public class BuscadorPaciente {
+public class BuscadorLaboratorista {
     
-     /*
-        METODO PARA MOSTRAR TODOS LOS PACIENTES
+    /*
+        METODO PARA MOSTRAR TODOS LOS MEDICOS
     */
     
-    public ResultSet mostrarPacientes(){
-        String query = "SELECT * FROM PACIENTE";
+    public ResultSet mostrarLaboratorista(){
+        String query = "SELECT * FROM LABORATORISTA";
         try {
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
@@ -35,10 +35,10 @@ public class BuscadorPaciente {
     }
     
     /*
-        METODO PARA BUSCAR PACIENTE POR CODIGO
+        METODO PARA BUSCAR LABORATORISTA POR CODIGO
     */
     public ResultSet buscadorCodigo(String codigo) throws SQLException{
-        String query = "SELECT * FROM PACIENTE WHERE codigo LIKE '%"+codigo+"%'";
+        String query = "SELECT * FROM LABORATORISTA WHERE codigo LIKE '%"+codigo+"%'";
         try {
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
@@ -50,4 +50,5 @@ public class BuscadorPaciente {
             return null;
         }   
     }
+    
 }

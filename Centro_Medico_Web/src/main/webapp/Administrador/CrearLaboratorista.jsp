@@ -109,7 +109,7 @@
                                   String fecha_inicio = request.getParameter("fecha_inicio");
                                   String password = request.getParameter("password");
                                   String examen = request.getParameter("examen");
-                                  Laboratorista lab = new Laboratorista(codigo, nombre, numero_registro, dpi, telefono, email,LocalDate.parse(fecha_inicio), password,examen);
+                                  Laboratorista lab = new Laboratorista(codigo, nombre, numero_registro, dpi, telefono, email,LocalDate.parse(fecha_inicio), password,Integer.parseInt(examen));
                                   lab.insertarLaboratorista();
                                   
                                   ArrayList dias_trabajo = new ArrayList();

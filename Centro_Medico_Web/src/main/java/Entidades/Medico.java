@@ -235,7 +235,6 @@ public class Medico {
     */
     public void actualizarMedico() throws SQLException, UnsupportedEncodingException{
         String query = "UPDATE MEDICO SET nombre=?, numero_colegiado=?, dpi=?, telefono=?, email=?, hora_entrada=?, hora_salida=?, fecha_inicio=?, password=? WHERE codigo=?";
-        System.out.println("codigo :"+getCodigo());
         try {
             //Se encripta la password
             setPassword(Encriptador.encriptar(getPassword()));

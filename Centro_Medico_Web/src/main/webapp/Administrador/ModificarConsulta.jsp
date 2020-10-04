@@ -11,13 +11,8 @@
     <!-- Encabezado -->
       <%@include file="Encabezado.html" %>
        <script>
-        function alerta(costo) {
-            if(costo===0){
+        function alerta() {
                 alert("Llene todos los campos");
-            }else{
-                 alert("Actualizado con exito");
-            }
-            
         }
       </script>
       <% int consulta_codigo;

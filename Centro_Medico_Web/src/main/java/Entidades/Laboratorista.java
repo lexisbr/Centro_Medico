@@ -213,7 +213,6 @@ public class Laboratorista {
     */
     public void actualizarLaboratorista() throws SQLException, UnsupportedEncodingException{
         String query = "UPDATE LABORATORISTA SET nombre=?, numero_registro=?, dpi=?, telefono=?, email=?, fecha_inicio=?, password=?, examen_laboratorio_codigo=? WHERE codigo=?";
-        System.out.println("codigo :"+getCodigo());
         try {
             //Se encripta la password
             setPassword(Encriptador.encriptar(getPassword()));

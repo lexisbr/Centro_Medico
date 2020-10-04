@@ -90,7 +90,7 @@ public class Administrador {
         
     }
     
-    public void consultarDatos(){
+    public void consultarDatos() throws UnsupportedEncodingException{
         String query = "SELECT * FROM ADMINISTRADOR WHERE codigo=?";
         try { 
             //Se establecen los parametros del PreparedStament
@@ -101,12 +101,34 @@ public class Administrador {
             while(rs.next()){
                 setNombre(rs.getString("nombre"));
                 setDpi(rs.getString("dpi"));
+                setPassword(Encriptador.desencriptar(rs.getString("password")));
             }
         } catch (SQLException e) {
             System.out.println("Error "+e);
         }
     }
     
+    /*
+        Metodo para actualizar un laboratorista.
+    */
+    public void actualizarAdmin() throws SQLException, UnsupportedEncodingException{
+        String query = "UPDATE ADMINISTRADOR SET nombre=?, dpi=?, password=? WHERE codigo=?";
+        try {
+            //Se encripta la password
+            setPassword(Encriptador.encriptar(getPassword()));
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(4,getCodigo());
+            st.setString(1,getNombre());
+            st.setString(2,getDpi());
+            st.setString(3,getPassword());
+            //Ejecuta el insert
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+    }
     
     
     

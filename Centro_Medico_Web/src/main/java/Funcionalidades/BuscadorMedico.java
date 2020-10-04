@@ -97,9 +97,9 @@ public class BuscadorMedico {
         METODO SELECT MEDICO POR CODIGO
     */
      
-     public ResultSet selectMedico(String codigo) throws SQLException{
+    public ResultSet selectMedico(String codigo) throws SQLException{
         String query = "SELECT M.*,E.especialidad_nombre,C.costo FROM MEDICO M INNER JOIN ESPECIALIZACION E ON M.codigo=E.medico_codigo INNER JOIN CONSULTA C ON E.especialidad_nombre=C.nombre_especialidad WHERE M.codigo=?";
-         
+        System.out.println("codigo: "+codigo);
         try {
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
@@ -114,6 +114,22 @@ public class BuscadorMedico {
         }   
     }
     
+    /*
+        METODO PARA BUSCAR MEDICO POR CODIGO
+    */
+    public ResultSet buscadorCodigo(String codigo) throws SQLException{
+        String query = "SELECT M.*,E.especialidad_nombre FROM MEDICO M INNER JOIN ESPECIALIZACION E ON M.codigo=E.medico_codigo WHERE M.codigo LIKE '%"+codigo+"%'";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+            
+        } catch (SQLException e) {
+            return null;
+        }   
+    }
     
     
     

@@ -75,7 +75,6 @@
                                   LocalTime horaSalidaIngresada = LocalTime.parse(hora_salida);
                                   
                                   if((horaEntradaIngresada.isBefore(horaSalidaIngresada))){
-                                      System.out.println("entra"+codigo+" "+nombre+""+" "+numero_colegiado+" "+dpi+" "+telefono+" "+email+" "+horaEntradaIngresada+" "+horaSalidaIngresada+" "+fecha_inicio+" "+especialidad);
                                       Medico medico = new Medico(codigo, nombre, numero_colegiado, dpi, telefono, email, horaEntradaIngresada, horaSalidaIngresada, LocalDate.parse(fecha_inicio), password,especialidad);
                                       medico.insertarMedico();
                                       %>
@@ -83,18 +82,10 @@
                                             <h1>Medico registrado con exito</h1>
                                         </div>
                       
-                                 <% }else{
-                                    System.out.println("no entra");
-                                    
-%>
+                                 <% }else{ %>
                                     <h3>No ingreso correctamente las horas</h3>
-                                  <%}
-                                  
-
-                      %>
-                     
-                      
-                      <%                              }
+                                  <%} %>
+                      <%        }
 
                           } catch (Exception e) {
                                 System.out.println("error " +e);

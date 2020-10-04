@@ -167,6 +167,9 @@ public class Paciente {
         }
         
     }
+    /*
+        METODO PARA OBTENER DATOS DE PACIENTE
+    */
     
     public void consultarDatos() throws UnsupportedEncodingException{
         String query = "SELECT * FROM PACIENTE WHERE codigo=?";

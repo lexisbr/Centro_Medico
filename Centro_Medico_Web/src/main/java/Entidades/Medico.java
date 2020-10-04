@@ -48,8 +48,8 @@ public class Medico {
         this.nombre_especialidad = nombre_especialidad;
     }
     
-    public Medico(){
-        
+    public Medico(String codigo){
+        this.codigo = codigo;
     }
 
     public void setCodigo(String codigo) {
@@ -177,32 +177,88 @@ public class Medico {
         METODO PARA GUARDAR LA ESPECIALIDAD DEL MEDICO, SINO EXISTE LA CREA
     */
     
-    public void verificarEspecialidad(){
+    public void verificarEspecialidad() {
         String query = "SELECT nombre FROM ESPECIALIDAD WHERE nombre=?";
-        
-        try { 
+
+        try {
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
-            st.setString(1,getNombre_especialidad());
+            st.setString(1, getNombre_especialidad());
             //Ejecuta el select
             ResultSet rs = st.executeQuery();
-            if (!rs.next())
-                {
-                    Especialidad esp = new Especialidad(getNombre_especialidad());
-                    esp.insertarEspecialidad();
-                    Especializacion espz = new Especializacion(getNombre_especialidad(), getCodigo());
-                    espz.insertarEspecializacion();
-                }else{
-                    Especializacion espz = new Especializacion(getNombre_especialidad(), getCodigo());
-                    espz.insertarEspecializacion();
-                }
+            if (!rs.next()) {
+                Especialidad esp = new Especialidad(getNombre_especialidad());
+                esp.insertarEspecialidad();
+                Especializacion espz = new Especializacion(getNombre_especialidad(), getCodigo());
+                espz.insertarEspecializacion();
+            } else {
+                Especializacion espz = new Especializacion(getNombre_especialidad(), getCodigo());
+                espz.insertarEspecializacion();
+            }
+            st.close();
+        } catch (SQLException e) {
+            System.out.println("Error " + e);
+        }
+    }
+    
+    
+         /*
+            METODO PARA OBTENER DATOS DE PACIENTE
+        */
+    
+     public void consultarDatos() throws UnsupportedEncodingException {
+        String query = "SELECT * FROM MEDICO WHERE codigo=?";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1, getCodigo());
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                setNombre(rs.getString(2));
+                setNumero_colegiado(rs.getString(3));
+                setDpi(rs.getString(4));
+                setTelefono(rs.getString(5));
+                setEmail(rs.getString(6));
+                setHora_entrada(LocalTime.parse(String.valueOf(rs.getTime(7))));
+                setHora_salida(LocalTime.parse(String.valueOf(rs.getTime(8))));
+                setFecha_inicio(LocalDate.parse(rs.getString(9)));
+                setPassword(Encriptador.desencriptar(rs.getString("password")));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error " + e);
+        }
+    }
+    
+    /*
+        Metodo para actualizar un medico.
+    */
+    public void actualizarMedico() throws SQLException, UnsupportedEncodingException{
+        String query = "UPDATE MEDICO SET nombre=?, numero_colegiado=?, dpi=?, telefono=?, email=?, hora_entrada=?, hora_salida=?, fecha_inicio=?, password=? WHERE codigo=?";
+        System.out.println("codigo :"+getCodigo());
+        try {
+            //Se encripta la password
+            setPassword(Encriptador.encriptar(getPassword()));
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(10,getCodigo());
+            st.setString(1,getNombre());
+            st.setString(2,getNumero_colegiado());
+            st.setString(3,getDpi());
+            st.setString(4,getTelefono());
+            st.setString(5,getEmail());
+            st.setTime(6,Time.valueOf(getHora_entrada()));
+            st.setTime(7,Time.valueOf(getHora_salida()));
+            st.setDate(8,Date.valueOf(getFecha_inicio()));
+            st.setString(9,getPassword());
+            //Ejecuta el insert
+            st.executeUpdate();
             st.close();
         } catch (SQLException e) {
             System.out.println("Error "+e);
         }
+        
     }
-    
-  
      
      
      

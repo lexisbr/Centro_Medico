@@ -36,6 +36,10 @@ public class Examen_laboratorio {
     public Examen_laboratorio(int codigo){
         this.codigo = codigo;
     }
+    
+    public Examen_laboratorio(){
+        
+    }
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;

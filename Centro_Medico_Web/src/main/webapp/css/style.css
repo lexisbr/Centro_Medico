@@ -314,6 +314,22 @@ ESTLO DE INDEX
     margin-bottom: 15px;
 }
 
+.form-hora1 h1{
+    margin-right: 15px;
+}
+
+.div-examen .seleccionar-examen{
+    position: relative;
+    margin-right: 30px;
+    top: -10px;
+}
+
+.caja{
+    width: 250px;
+    margin: 0;
+    float: left;
+}
+
 /*
     ESTILO BARRA BUSCAR
 */

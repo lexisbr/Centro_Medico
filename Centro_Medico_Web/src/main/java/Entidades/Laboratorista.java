@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 /**
  *
@@ -163,6 +164,12 @@ public class Laboratorista {
 
         } catch (SQLException e) {
             return null;
+        }
+    }
+    
+    public void generarDias(ArrayList dias,String codigo) {
+        for (int i = 0; i < dias.size(); i++) {
+            Dias_trabajo nuevoDia=new Dias_trabajo(0, dias.get(i).toString(), codigo);
         }
     }
 }

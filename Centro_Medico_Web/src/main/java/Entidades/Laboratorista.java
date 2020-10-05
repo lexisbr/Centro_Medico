@@ -31,6 +31,20 @@ public class Laboratorista {
     private LocalDate fecha_inicio;
     private String password;
     private int examen_laboratorio_codigo;
+    private String examen_nombre;
+    private double costo_examen;
+
+    public void setCosto_examen(double costo_examen) {
+        this.costo_examen = costo_examen;
+    }
+
+    public double getCosto_examen() {
+        return costo_examen;
+    }
+
+    public void setExamen_nombre(String examen_nombre) {
+        this.examen_nombre = examen_nombre;
+    }
 
     public Laboratorista(String codigo, String nombre, String numero_registro, String dpi, String telefono, String email, LocalDate fecha_inicio, String password, int examen_laboratorio_codigo) {
         this.codigo = codigo;
@@ -88,8 +102,11 @@ public class Laboratorista {
     public void setExamen_laboratorio_codigo(int examen_laboratorio_codigo) {
         this.examen_laboratorio_codigo = examen_laboratorio_codigo;
     }
-    
 
+    public String getExamen_nombre() {
+        return examen_nombre;
+    }
+    
     public String getCodigo() {
         return codigo;
     }
@@ -181,7 +198,7 @@ public class Laboratorista {
     }
     
     /*
-        METODO PARA OBTENER DATOS DE PACIENTE
+        METODO PARA OBTENER DATOS DE LABORATORISTA
     */
     
      public void consultarDatos() throws UnsupportedEncodingException {
@@ -232,6 +249,37 @@ public class Laboratorista {
             st.close();
         } catch (SQLException e) {
             System.out.println("Error "+e);
+        }
+    }
+    
+    
+    /*
+        METODO PARA OBTENER DATOS DE LABORATORISTA CON EXAMEN 
+    */
+    
+     public void consultarDatosExamen() throws UnsupportedEncodingException {
+        String query = "SELECT L.*,E.nombre as examen,E.costo FROM LABORATORISTA L INNER JOIN EXAMEN_LABORATORIO E ON E.codigo=L.examen_laboratorio_codigo WHERE L.codigo=?";
+        
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1, getCodigo());
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                setNombre(rs.getString(2));
+                setNumero_registro(rs.getString(3));
+                setDpi(rs.getString(4));
+                setTelefono(rs.getString(5));
+                setEmail(rs.getString(6));
+                setFecha_inicio(LocalDate.parse(rs.getString(7)));
+                setPassword(Encriptador.desencriptar(rs.getString("password")));
+                setExamen_laboratorio_codigo(rs.getInt("examen_laboratorio_codigo"));
+                setExamen_nombre(rs.getString("examen"));
+                setCosto_examen(rs.getDouble("costo"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error " + e);
         }
     }
     

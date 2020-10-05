@@ -13,7 +13,6 @@
     <!-- Encabezado -->
       <%@include file="Encabezado.html" %>
       <script>
-          
         function alerta() {
             alert("Actualizado con exito");
         }

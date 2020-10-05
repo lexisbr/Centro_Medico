@@ -14,6 +14,7 @@
       <%@include file="Encabezado.html" %>
       <section class="contenidoLex">
           <form action="BuscarConsulta.jsp" method="POST">
+               <h2 class="titleLex">Buscar consulta</h2><br>
               <div class="wrap">
                   <h2>Ingrese nombre de consulta:</h2>
                   <%@include file="SearchBar.html" %>

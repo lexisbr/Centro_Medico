@@ -14,6 +14,7 @@
       <%@include file="Encabezado.html" %>
       <section class="contenidoLex">
           <form action="BuscarLaboratorista.jsp" method="POST">
+               <h2 class="titleLex">Buscar laboratorista</h2><br>
               <div class="wrap">
                   <h2>Ingrese codigo de laboratorista:</h2>
                   <%@include file="SearchBar.html" %>
@@ -24,9 +25,9 @@
                       <tr>
                           <th class="text-center">Codigo</th>
                           <th class="text-center">Nombre</th>
-                          <th class="text-center">Sexo</th>
-                          <th class="text-center">Fecha de Nacimiento</th>
                           <th class="text-center">DPI</th>
+                          <th class="text-center">Telefono</th>
+                          <th class="text-center">Email</th>
                       </tr>
                       <% try {
                               String campo = request.getParameter("campo");

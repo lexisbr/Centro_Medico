@@ -14,6 +14,7 @@
       <%@include file="Encabezado.html" %>
       <section class="contenidoLex">
           <form action="BuscarAdmin.jsp" method="POST">
+               <h2 class="titleLex">Buscar administrador</h2><br>
               <div class="wrap">
                   <h2>Ingrese nombre de examen:</h2>
                   <%@include file="SearchBar.html" %>

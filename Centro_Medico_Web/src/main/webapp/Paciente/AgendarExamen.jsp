@@ -17,11 +17,9 @@
     <%@include file="Encabezado.html" %>
     <% try {
             String usuario = String.valueOf(session.getAttribute("user"));
-            String nombre_examen = request.getParameter("nombre");
-            Laboratorista laboratorista = new Laboratorista();
-            BuscadorExamenes examen = new BuscadorExamenes();
-            ResultSet rs = examen.buscadorNombre(nombre_examen);
-            while (rs.next()) {%>
+            String codigo_lab = request.getParameter("codigo");
+            Laboratorista lab = new Laboratorista(codigo_lab);
+            lab.consultarDatosExamen();%>
             <section class="contenidoLex">
                 <div class="container">
                     <h2 class="titleLex" >Registrar Cita</h2>
@@ -29,31 +27,20 @@
                     <div class="centrar">
                         <form action="" method="post" class="form-control" style="width: 500px; height: 800px; background: #ccccff;">
                             <div class="form-group">
-                                <h1>Codigo de examen</h1>
-                                <% 
-                                    String codigo = rs.getString("codigo");
-                                %>
-                                <input type="text" readonly="" name="codigo_examen" class="form-control" value="<%= codigo%>"/>
+                                <h1>Codigo de laboratorista</h1>
+                                <input type="text" readonly="" name="codigo_examen" class="form-control" value="<%= lab.getCodigo()%>"/>
                             </div>
                             <div class="form-group">
                                 <h1>Nombre de examen</h1>
-                                <input type="text" readonly="" class="form-control" value="<%= rs.getString("nombre")%>"/>
-                            </div>
-                            <div class="form-group">
-                                <h1>Descripcion</h1>
-                                <input type="text" readonly="" class="form-control" value="<%= rs.getString("descripcion")%>"/>
+                                <input type="text" readonly="" class="form-control" value="<%= lab.getExamen_nombre()%>"/>
                             </div>
                             <div class="form-group">
                                 <h1>Precio de examen</h1>
-                                <input type="text" readonly="" class="form-control" value="<%= rs.getString("costo")%>"/>
+                                <input type="text" readonly="" class="form-control" value="<%= lab.getCosto_examen() %>"/>
                             </div>
                             <div class="form-group">
                                 <h1>Codigo de Paciente</h1>
-                                <input type="text" readonly=""  name="codigo_paciente" class="form-control" value="<%= usuario%>"/>
-                            </div>
-                            <div class="form-group">
-                                <h1>Codigo de Laboratorista</h1>
-                                <input type="text" readonly=""  name="codigo_laboratorista" class="form-control" value="<%= laboratorista.obtenerCodigoLaboratorista(codigo) %>"/>
+                                <input type="text" readonly=""  name="codigo_paciente" class="form-control" value="<%= usuario %>"/>
                             </div>
                             <div class="form-group">
                                 <h1>Fecha</h1>
@@ -62,26 +49,27 @@
                             </div>
                             <div class="form-group">
                                 <select class="custom-select" name="tiempo">
-                                    <option value="no_verificado">No ha verificado la disponibilidad</option>
+                                    
                                     <%
                                         if (request.getParameter("fecha_ingresada") != null) {
                                             String fecha = request.getParameter("fecha");
-                                            BuscadorCitas busc = new BuscadorCitas("codigo1", Date.valueOf(fecha));
+                                            BuscadorCitas busc = new BuscadorCitas(lab.getCodigo(), Date.valueOf(fecha));
                                             ArrayList horasDisponibles = new ArrayList(busc.citasExamenDisponibles());
 
                                             for (int i = 0; i < horasDisponibles.size(); i++) {%>
                                             <option value="<%=horasDisponibles.get(i)%>"><%=horasDisponibles.get(i)%></option>
                                     <% }
-                                        }
+                                        }else{%>
+                                            <option value="no_verificado">No ha verificado la disponibilidad</option>
+                                        <%}
 
                                     %>
                                 </select>
                             </div>
-                            <%                                 try {
+                            <%try {
                                     if (!request.getParameter("tiempo").equals("no_verificado")) {
                                         String fecha = request.getParameter("fecha");
                                         String hora = request.getParameter("tiempo");
-                                        String lab = request.getParameter("codigo_laboratorista");
                             %>
 
                             <div class="mensaje-exito">
@@ -96,7 +84,7 @@
                             <input type="submit" value="Guardar" class="guardar"/>
 
                         </form>
-                        <% }
+                        <% 
                             } catch (Exception e) {
 
                             }

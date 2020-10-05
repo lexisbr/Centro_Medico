@@ -25,7 +25,7 @@
                  <h2 class="titleLex" >Registrar Cita</h2>
                  <hr>
                  <div class="centrar">
-                     <form action="" method="post" class="form-control" style="width: 500px; height: 700px; background: #ccccff;">
+                     <form action="" method="post" class="form-control" style="width: 500px; height: 750px; background: #ccccff;">
                          <div class="form-group">
                              <h1>Codigo de medico</h1>
                              <input type="text" readonly="" name="codigo_medico" class="form-control" value="<%= rs.getString("codigo")%>"/>

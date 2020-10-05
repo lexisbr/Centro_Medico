@@ -65,7 +65,7 @@
                 <input type="password" name="password" placeholder="Ingresa tu contraseña.">
 
                 <input type="submit" value="Ingresar">
-                <a href="#">Crear una cuenta.</a></br>
+                <a href="./CrearPaciente.jsp">Crear una cuenta.</a></br>
             </form>
         </div>
     </body>

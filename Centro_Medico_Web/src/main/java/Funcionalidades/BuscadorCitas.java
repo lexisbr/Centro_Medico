@@ -72,7 +72,7 @@ public class BuscadorCitas {
             ArrayList horasDisponibles = new ArrayList();
             for (int i = 0; i < horas.length; i++) {
                 if (!citasMedicas(horas[i]).next()) {
-                        horasDisponibles.add(horas[i]);
+                        horasDisponibles.add(LocalTime.of(Integer.valueOf(horas[i]),0));
                 }
             }
             return horasDisponibles;
@@ -83,11 +83,11 @@ public class BuscadorCitas {
 
     public ResultSet citasMedicas(String hora) {
         String query = "SELECT * FROM CITA_MEDICA WHERE hora=? AND fecha=? AND medico_codigo=?";
-        
+        int horaEntera=Integer.valueOf(hora);
         try {
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
-            st.setTime(1, Time.valueOf(LocalTime.parse(hora)));
+            st.setTime(1, Time.valueOf(LocalTime.of(horaEntera,0)));
             st.setDate(2, getFecha());
             st.setString(3, getCodigo());
             //Ejecuta el select
@@ -136,7 +136,6 @@ public class BuscadorCitas {
         //Se van guardando las hora entre el intervalo
         for (int i = hora_inicio; i < hora_final; i++) {
             guardarHoras[contador] = String.valueOf(i);
-            guardarHoras[contador]+= ":00";
             contador++;
         }
         

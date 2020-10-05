@@ -35,6 +35,7 @@
             String codigo = String.valueOf(session.getAttribute("user"));
             Paciente paciente = new Paciente(codigo);
             paciente.consultarDatos();%>
+          <h1>Codigo: <%=paciente.getCodigo()%><h1>  
           <h1>DPI: <%=paciente.getDpi()%><h1>  
           <h1>Nombre: <%=paciente.getNombre()%><h1> 
           <h1>Sexo: <%=paciente.getSexo()%><h1> 

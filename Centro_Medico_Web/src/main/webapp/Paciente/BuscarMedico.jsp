@@ -11,6 +11,7 @@
       <%@include file="Encabezado.html" %>
          <section class="contenidoLex">
              <form action="BuscarMedico.jsp" method="POST">
+                 <h2 class="titleLex">Seleccionar medico.</h2><br>
                  <div class="wrap">
                      <select class="seleccionar" name="categoria">
                          <option value="0">Seleccione la categoria.</option>

@@ -35,6 +35,10 @@ public class Cita_examen {
         this.laboratorista_codigo = laboratorista_codigo;
     }
 
+    public Cita_examen() {
+    }
+    
+
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }

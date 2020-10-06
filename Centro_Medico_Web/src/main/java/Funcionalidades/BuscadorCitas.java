@@ -153,9 +153,7 @@ public class BuscadorCitas {
                     hora = i+":00";
                 }
                 if (!citasExamen(hora).next()) {
-                        System.out.println(hora);
                         horasDisponibles.add(hora);
-                        
                 }
             }
             return horasDisponibles;

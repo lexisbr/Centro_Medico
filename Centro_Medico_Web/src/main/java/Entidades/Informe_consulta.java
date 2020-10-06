@@ -13,7 +13,7 @@ import java.time.LocalTime;
  * @author lex
  */
 public class Informe_consulta {
-    private String codigo; 
+    private int codigo; 
     private String descripcion;
     private LocalDate fecha;
     private LocalTime hora;
@@ -21,7 +21,7 @@ public class Informe_consulta {
     private String paciente_codigo;
     private String medico_codigo;
 
-    public Informe_consulta(String codigo, String descripcion, LocalDate fecha, LocalTime hora, int consulta_codigo, String paciente_codigo, String medico_codigo) {
+    public Informe_consulta(int codigo, String descripcion, LocalDate fecha, LocalTime hora, int consulta_codigo, String paciente_codigo, String medico_codigo) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.fecha = fecha;
@@ -31,7 +31,7 @@ public class Informe_consulta {
         this.medico_codigo = medico_codigo;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
@@ -59,7 +59,7 @@ public class Informe_consulta {
         return medico_codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -93,7 +93,7 @@ public class Informe_consulta {
        try { 
            //Se establecen los parametros del PreparedStament
            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
-           st.setString(1,getCodigo());
+           st.setInt(1,getCodigo());
            st.setString(2,getDescripcion());
            st.setDate(3,Date.valueOf(getFecha()));
            st.setTime(4,Time.valueOf(getHora()));

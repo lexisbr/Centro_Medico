@@ -26,24 +26,23 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-   
-       <%@include file="Encabezado.html" %>
+     <%@include file="Encabezado.html" %>
       <!--Informacion de usuario-->
       <section class="contenidoLex">
           <h2 class="titleLex">Informacion de Usuario</h2>
           <%
             String codigo = String.valueOf(session.getAttribute("user"));
-            Paciente paciente = new Paciente(codigo);
-            paciente.consultarDatos();%>
-          <h1>Codigo: <%=paciente.getCodigo()%></h1>  
-          <h1>DPI: <%=paciente.getDpi()%></h1>  
-          <h1>Nombre: <%=paciente.getNombre()%></h1> 
-          <h1>Sexo: <%=paciente.getSexo()%></h1> 
-          <h1>Fecha de Nacimiento: <%=String.valueOf(paciente.getFecha_nacimiento())%></h1> 
-          <h1>Peso: <%=paciente.getPeso()%></h1>         
-          <h1>Tipo de Sangre: <%=paciente.getTipo_sangre()%></h1>
-          <h1>Telefono: <%=paciente.getTelefono()%></h1>       
-          <h1>Email: <%=paciente.getEmail()%></h1>         
+            Medico medico = new Medico(codigo);
+             medico.consultarDatos();%>
+          <h1>Codigo: <%=medico.getCodigo()%></h1>  
+          <h1>DPI: <%=medico.getDpi()%></h1>  
+          <h1>Nombre: <%=medico.getNombre()%></h1> 
+          <h1>Numero de colegiado: <%=medico.getNumero_colegiado()%></h1> 
+          <h1>Hora de entrada: <%=medico.getHora_entrada().toString() %></h1>         
+          <h1>Hora de salida: <%=medico.getHora_salida().toString() %></h1>         
+          <h1>Telefono: <%=medico.getTelefono()%></h1>       
+          <h1>Email: <%=medico.getEmail()%></h1>         
+          <h1>Fecha de inicio: <%=String.valueOf(medico.getFecha_inicio())%></h1> 
       </section>
     </body>
 </html>

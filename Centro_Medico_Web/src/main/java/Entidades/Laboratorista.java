@@ -33,6 +33,15 @@ public class Laboratorista {
     private int examen_laboratorio_codigo;
     private String examen_nombre;
     private double costo_examen;
+    private boolean requiere_orden;
+
+    public void setRequiere_orden(boolean requiere_orden) {
+        this.requiere_orden = requiere_orden;
+    }
+
+    public boolean isRequiere_orden() {
+        return requiere_orden;
+    }
 
     public void setCosto_examen(double costo_examen) {
         this.costo_examen = costo_examen;
@@ -258,7 +267,7 @@ public class Laboratorista {
     */
     
      public void consultarDatosExamen() throws UnsupportedEncodingException {
-        String query = "SELECT L.*,E.nombre as examen,E.costo FROM LABORATORISTA L INNER JOIN EXAMEN_LABORATORIO E ON E.codigo=L.examen_laboratorio_codigo WHERE L.codigo=?";
+        String query = "SELECT L.*,E.nombre as examen,E.costo,E.requiere_orden FROM LABORATORISTA L INNER JOIN EXAMEN_LABORATORIO E ON E.codigo=L.examen_laboratorio_codigo WHERE L.codigo=?";
         
         try {
             //Se establecen los parametros del PreparedStament
@@ -277,6 +286,12 @@ public class Laboratorista {
                 setExamen_laboratorio_codigo(rs.getInt("examen_laboratorio_codigo"));
                 setExamen_nombre(rs.getString("examen"));
                 setCosto_examen(rs.getDouble("costo"));
+                System.out.println(rs.getInt("requiere_orden"));
+                if(rs.getInt("requiere_orden")==1){
+                    setRequiere_orden(true);
+                }else{
+                    setRequiere_orden(false);
+                }
             }
         } catch (SQLException e) {
             System.out.println("Error " + e);

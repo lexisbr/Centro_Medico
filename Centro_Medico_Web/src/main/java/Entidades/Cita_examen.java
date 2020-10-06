@@ -6,6 +6,7 @@
 package Entidades;
 
 import MYSQL.Conexion;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,11 +23,11 @@ public class Cita_examen {
     private int codigo;
     private LocalDate fecha;
     private LocalTime hora;
-    private Blob orden_medico;
+    private String orden_medico;
     private String paciente_codigo;
     private String laboratorista_codigo;
 
-    public Cita_examen(int codigo, LocalDate fecha, LocalTime hora, Blob orden_medico, String paciente_codigo, String laboratorista_codigo) {
+    public Cita_examen(int codigo, LocalDate fecha, LocalTime hora, String orden_medico, String paciente_codigo, String laboratorista_codigo) {
         this.codigo = codigo;
         this.fecha = fecha;
         this.hora = hora;
@@ -51,7 +52,7 @@ public class Cita_examen {
         this.hora = hora;
     }
 
-    public void setOrden_medico(Blob orden_medico) {
+    public void setOrden_medico(String orden_medico) {
         this.orden_medico = orden_medico;
     }
 
@@ -75,7 +76,7 @@ public class Cita_examen {
         return hora;
     }
 
-    public Blob getOrden_medico() {
+    public String getOrden_medico() {
         return orden_medico;
     }
 
@@ -89,14 +90,14 @@ public class Cita_examen {
     
     public void insertarCita_examen() throws SQLException{
         String query = "INSERT INTO CITA_EXAMEN VALUES(?,?,?,?,?,?)";
-        
+        System.out.println("entra a insertar");
         try { 
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
             st.setInt(1,getCodigo());
             st.setDate(2,Date.valueOf(getFecha()));
             st.setTime(3,Time.valueOf(getHora()));
-            st.setBlob(4,getOrden_medico());
+            st.setString(4,getOrden_medico());
             st.setString(5,getPaciente_codigo());
             st.setString(6,getLaboratorista_codigo());
             //Ejecuta el insert

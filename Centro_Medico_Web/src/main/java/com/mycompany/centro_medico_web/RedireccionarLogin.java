@@ -46,7 +46,9 @@ public class RedireccionarLogin extends HttpServlet {
                     request.setAttribute("message", null);
                     session.setAttribute("message",null);
                 }else if(tipo.equals("MEDICO")){
-                    
+                    paginaDestino = "Medico/IndexMedico.jsp"; 
+                    request.setAttribute("message", null);
+                    session.setAttribute("message",null);
                     
                 }else if(tipo.equals("LABORATORISTA")){
                     

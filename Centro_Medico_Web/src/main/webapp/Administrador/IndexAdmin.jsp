@@ -35,9 +35,9 @@
             String codigo = String.valueOf(session.getAttribute("user"));
             Administrador admin = new Administrador(codigo);
             admin.consultarDatos();%>
-          <h1>Codigo: <%=admin.getCodigo()%><h1>  
-          <h1>DPI: <%=admin.getDpi()%><h1>  
-          <h1>Nombre: <%=admin.getNombre()%><h1> 
+          <h1>Codigo: <%=admin.getCodigo()%></h1>  
+          <h1>DPI: <%=admin.getDpi()%></h1>  
+          <h1>Nombre: <%=admin.getNombre()%></h1> 
       </section>
     </body>
 </html>

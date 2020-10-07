@@ -21,7 +21,7 @@
     %>
     <section class="contenidoLex">
         <form action="CitasHoy.jsp" method="POST">
-            <h2 class="titleLex">Visualizar citas medicas</h2><br>
+            <h2 class="titleLex">Citas agendadas en un intervalo</h2><br>
             <div class="wrap">
                 <h2>Fecha inicio:<%=fecha_inicio%></h2>
                 <h2>Fecha final:<%=fecha_final%></h2>

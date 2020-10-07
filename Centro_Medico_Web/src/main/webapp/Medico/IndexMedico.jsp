@@ -29,7 +29,7 @@
      <%@include file="Encabezado.html" %>
       <!--Informacion de usuario-->
       <section class="contenidoLex">
-          <h2 class="titleLex">Informacion de Usuario</h2>
+          <h2 class="titleLex">Informacion de Medico</h2>
           <%
             String codigo = String.valueOf(session.getAttribute("user"));
             Medico medico = new Medico(codigo);

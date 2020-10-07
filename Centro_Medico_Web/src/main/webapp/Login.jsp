@@ -37,6 +37,8 @@
 //                    paciente.insertarPaciente();
 //                    Examen_laboratorio examen = new Examen_laboratorio("1","Examen de sangre",true,"Analisis de globulos rojos ", 150.00, "PDF");
 //                    examen.insertarExamen_laboratorio();
+//                    Administrador admin = new Administrador("codigo1", "soyadmin", "55555", "123456");
+//                    admin.insertarAdministrador();
                     
                 } catch (Exception e) {
                     System.out.println("Error login "+e);

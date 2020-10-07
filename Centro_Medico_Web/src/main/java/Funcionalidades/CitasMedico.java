@@ -22,6 +22,9 @@ public class CitasMedico {
         this.codigo_medico = codigo_medico;
     }
 
+    public CitasMedico() {
+    }
+
     public String getCodigo_medico() {
         return codigo_medico;
     }
@@ -91,6 +94,72 @@ public class CitasMedico {
         } catch (SQLException e) {
 
         }
+    }
+    
+    /*
+    METODO PARA OBTENER LAS CITAS MEDICAS DE UN MEDICO EN DIA EN CURSO
+    */
+    public ResultSet citasMedicas(String fecha) {
+        String query = "SELECT C.*,P.nombre AS nombre_paciente, E.nombre_especialidad AS nombre_consulta FROM CITA_MEDICA C INNER JOIN PACIENTE P ON P.codigo=C.paciente_codigo INNER JOIN CONSULTA E ON E.codigo=C.consulta_codigo WHERE C.medico_codigo=? && C.fecha=?";
+
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1, getCodigo_medico());
+            st.setString(2, fecha);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            return null;
+
+        }
+
+    }
+    
+    /*
+    METODO PARA OBTENER LAS CITAS MEDICAS DE UN MEDICO EN DIA EN CURSO
+    */
+    public ResultSet buscarCitasMedicasHoy(String campo,String fecha) {
+        String query = "SELECT C.*,P.nombre AS nombre_paciente, E.nombre_especialidad AS nombre_consulta FROM CITA_MEDICA C INNER JOIN PACIENTE P ON P.codigo=C.paciente_codigo INNER JOIN CONSULTA E ON E.codigo=C.consulta_codigo WHERE C.medico_codigo=? && C.fecha=? && C.codigo=?";
+
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1, getCodigo_medico());
+            st.setString(2, fecha);
+            st.setString(3, campo);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            return null;
+
+        }
+
+    }
+    
+    /*
+    METODO PARA OBTENER LAS CITAS MEDICAS DE UN PACIENTE FILTRANDO POR CODIGO EN UN INTERVALO DE TIEMPO
+    */
+    
+    public ResultSet citasMedicasBuscar(String fecha1, String fecha2) {
+        String query = "SELECT C.*,P.nombre AS nombre_paciente, E.nombre_especialidad AS nombre_consulta FROM CITA_MEDICA C INNER JOIN PACIENTE P ON P.codigo=C.paciente_codigo INNER JOIN CONSULTA E ON E.codigo=C.consulta_codigo WHERE C.medico_codigo=?&&C.fecha BETWEEN ? AND ?";
+
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1, getCodigo_medico());
+            st.setString(2, fecha1);
+            st.setString(3, fecha2);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            return null;
+
+        }
+
     }
     
     

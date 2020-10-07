@@ -24,12 +24,18 @@
 <nav class="navbarLex">
     <ul class="menuLex">
         <li><a href="./IndexMedico.jsp">Inicio</a></li>
-        <li><a href="./ConsultarCitas.jsp">Generar informe</a></li>
-        <li><a href="#">Agendar cita</a></li>
+        <li><a href="#">Generar</a>
+            <ul class="submenuLex">
+                <li><a href="./ConsultarCitas.jsp">Informe medico</a></li>
+                <li><a href="./BuscarPacienteOrden.jsp">Orden de laboratorio</a></li>
+            </ul>
+        </li>
         <li><a href="#">Citas</a>
             <ul class="submenuLex">
-                <li><a href="BuscarMedico.jsp">Para hoy</a></li>
-                <li><a href="#">En un intervalo</a></li>
+                <li><a href="BuscarPacienteCita.jsp">Agendar cita</a></li>
+                <li><a href="CitasHoy.jsp">Para hoy</a></li>
+                <li><a href="IngresarIntervalo.jsp">En un intervalo</a></li>
+                <li><a href="CancelarCita.jsp">Cancelar cita</a></li>
             </ul>
         </li>
         <li><a href="#">Pacientes</a>

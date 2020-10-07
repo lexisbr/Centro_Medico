@@ -30,7 +30,7 @@
       <%@include file="Encabezado.html" %>
       <!--Informacion de usuario-->
       <section class="contenidoLex">
-          <h2 class="titleLex">Informacion de Usuario</h2>
+          <h2 class="titleLex">Informacion de Administrador</h2>
           <%
             String codigo = String.valueOf(session.getAttribute("user"));
             Administrador admin = new Administrador(codigo);

@@ -21,13 +21,17 @@
               </div>
 
               <div class="container">
-                  <table class="table table-dark table-bordered">
+                  <table class="table table-dark table-bordered" style="font-size: 15px;">
                       <tr>
                           <th class="text-center">Codigo</th>
                           <th class="text-center">Nombre</th>
                           <th class="text-center">Sexo</th>
                           <th class="text-center">Fecha de Nacimiento</th>
                           <th class="text-center">DPI</th>
+                          <th class="text-center">Telefono</th>
+                          <th class="text-center">Peso</th>
+                          <th class="text-center">Tipo de Sangre</th>
+                          <th class="text-center">Email</th>
                       </tr>
                       <% try {
                               String campo = request.getParameter("campo");
@@ -48,6 +52,10 @@
                           <td class="text-center"><%=rs.getString("sexo")%> </td>
                           <td class="text-center"><%=rs.getString("fecha_nacimiento")%> </td>
                           <td class="text-center"><%=rs.getString("dpi")%> </td>
+                          <td class="text-center"><%=rs.getString("telefono")%> </td>
+                          <td class="text-center"><%=rs.getString("peso")%> </td>
+                          <td class="text-center"><%=rs.getString("tipo_sangre")%> </td>
+                          <td class="text-center"><%=rs.getString("email")%> </td>
                           <td>
                               <a class="btn btn-warning btn-sm" href="ModificarPaciente.jsp?codigo=<%=rs.getString("codigo")%>">Modificar</a>
                           </td>

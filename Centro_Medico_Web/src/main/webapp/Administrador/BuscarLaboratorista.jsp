@@ -25,9 +25,12 @@
                       <tr>
                           <th class="text-center">Codigo</th>
                           <th class="text-center">Nombre</th>
+                          <th class="text-center">Numero MSPAS</th>
                           <th class="text-center">DPI</th>
                           <th class="text-center">Telefono</th>
                           <th class="text-center">Email</th>
+                          <th class="text-center">Fecha de inicio</th>
+                          <th class="text-center">Examen</th>
                       </tr>
                       <% try {
                               String campo = request.getParameter("campo");
@@ -45,9 +48,12 @@
                       <tr>
                           <td class="text-center"><%=rs.getString("codigo")%> </td>
                           <td class="text-center"><%=rs.getString("nombre")%> </td>
+                          <td class="text-center"><%=rs.getString("numero_registro")%> </td>
                           <td class="text-center"><%=rs.getString("dpi")%> </td>
                           <td class="text-center"><%=rs.getString("telefono")%> </td>
                           <td class="text-center"><%=rs.getString("email")%> </td>
+                          <td class="text-center"><%=rs.getString("fecha_inicio")%> </td>
+                          <td class="text-center"><%=rs.getString("examen_laboratorio_codigo")%> </td>
                           <td>
                               <a class="btn btn-warning btn-sm" href="ModificarLaboratorista.jsp?codigo=<%=rs.getString("codigo")%>">Modificar</a>
                           </td>

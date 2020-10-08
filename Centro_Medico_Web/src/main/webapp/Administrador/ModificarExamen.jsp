@@ -64,17 +64,6 @@
                            <h1>Tipo de Archivo</h1>
                           <input type="text" name="tipo_archivo" class="form-control" value="<%= examen.getTipo_archivo()%>" required=""/>
                       </div>
-
-
-                      <% /*boolean resultado;
-                          try {
-                              Double.parseDouble(request.getParameter("costo"));
-                              resultado = true;
-                          } catch (Exception excepcion) {
-                              resultado = false;
-                          }*/
-                          
-                      %>
                       <input type="submit" name="boton" value="Guardar" class="guardar"/>
                   </form>
               </div>

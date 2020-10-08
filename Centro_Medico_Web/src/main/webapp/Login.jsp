@@ -31,15 +31,8 @@
             <h1>Centro Medico</h1>
             <%  try {
                     Conexion.iniciarConexion();
-//                    Medico medico = new Medico("codigo5","nombre","45646","778787","7878778","aaa@aaa",LocalTime.now(),LocalTime.now(),LocalDate.now(),"123456","GENERAL");
-//                    medico.insertarMedico();
-//                    Paciente paciente = new Paciente("codigo1","nombre","masc",LocalDate.now(),"22222","4545454","45","a+","asdsad@fdf","123456");
-//                    paciente.insertarPaciente();
-//                    Examen_laboratorio examen = new Examen_laboratorio("1","Examen de sangre",true,"Analisis de globulos rojos ", 150.00, "PDF");
-//                    examen.insertarExamen_laboratorio();
-//                    Administrador admin = new Administrador("codigo1", "soyadmin", "55555", "123456");
-//                    admin.insertarAdministrador();
-                    
+                    Administrador admin = new Administrador("ADMIN123","ADMIN PRUEBA","123456789","123");
+                    admin.insertarAdministrador();
                 } catch (Exception e) {
                     System.out.println("Error login "+e);
                 }

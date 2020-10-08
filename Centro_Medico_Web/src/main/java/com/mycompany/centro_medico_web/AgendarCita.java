@@ -5,8 +5,12 @@
  */
 package com.mycompany.centro_medico_web;
 
+import Entidades.Cita_medica;
+import Entidades.Consulta;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +41,7 @@ public class AgendarCita extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AgendarCita</title>");            
+            out.println("<title>Servlet AgendarCita</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AgendarCita at " + request.getContextPath() + "</h1>");
@@ -72,8 +76,21 @@ public class AgendarCita extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+        try {
+            String codigo_medico = request.getParameter("codigo_medico");
+            String codigo_paciente = request.getParameter("codigo_paciente");
+            String fecha = request.getParameter("fecha");
+            String hora = request.getParameter("tiempo");
+            String consulta = request.getParameter("nombre_especialidad");
+            Consulta codigo_consulta = new Consulta(consulta);
+            String consulta_codigo = codigo_consulta.obtenerCodigoConsulta();
+            Cita_medica agendar_cita = new Cita_medica(0, LocalDate.parse(fecha), LocalTime.parse(hora), codigo_paciente, codigo_medico, Integer.parseInt(consulta_codigo));
+            agendar_cita.insertarCita_medica();
+            response.sendRedirect("Paciente/ExitoCita.jsp");
+
+        } catch (Exception e) {
+        }
+
     }
 
     /**

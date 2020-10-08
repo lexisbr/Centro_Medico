@@ -200,3 +200,4 @@ CREATE TABLE IF NOT EXISTS DIAS_TRABAJO(
   PRIMARY KEY (`codigo`),
 	FOREIGN KEY (`laboratorista_codigo`) REFERENCES LABORATORISTA (`codigo`)
 );
+

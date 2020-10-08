@@ -37,7 +37,7 @@
       %>
       <section class="contenidoLex">
           <div class="container">
-              <h2 class="titleLex" >Modificar Examen</h2>
+              <h2 class="titleLex" >Modificar Paciente</h2>
               <hr>
               <div class="centrar">
                   <form action="ModificarPaciente.jsp" method="post" class="form-control" style="width: 500px; height: 1000px; background: #ccccff;">

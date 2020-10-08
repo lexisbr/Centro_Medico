@@ -16,7 +16,7 @@
           <form action="BuscarAdmin.jsp" method="POST">
                <h2 class="titleLex">Buscar administrador</h2><br>
               <div class="wrap">
-                  <h2>Ingrese nombre de examen:</h2>
+                  <h2>Ingrese codigo de admin:</h2>
                   <%@include file="SearchBar.html" %>
               </div>
 

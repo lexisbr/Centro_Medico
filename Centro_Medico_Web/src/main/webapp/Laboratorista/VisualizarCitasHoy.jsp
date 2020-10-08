@@ -22,7 +22,7 @@
             <h2 class="titleLex">Citas agendadas para dia en curso</h2>
             <h2><%=LocalDate.now()%></h2><br>
             <div class="wrap">
-                <h2>Ingrese codigo de cita medica:</h2>
+                <h2>Ingrese codigo de cita:</h2>
                 <%@include file="SearchBar.html" %>
             </div>
 

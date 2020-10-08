@@ -31,8 +31,6 @@
             <h1>Centro Medico</h1>
             <%  try {
                     Conexion.iniciarConexion();
-                    Administrador admin = new Administrador("ADMIN123","ADMIN PRUEBA","123456789","123");
-                    admin.insertarAdministrador();
                 } catch (Exception e) {
                     System.out.println("Error login "+e);
                 }

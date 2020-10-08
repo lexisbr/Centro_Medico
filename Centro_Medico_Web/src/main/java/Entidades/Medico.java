@@ -47,6 +47,20 @@ public class Medico {
         this.password = password;
         this.nombre_especialidad = nombre_especialidad;
     }
+
+    public Medico(String codigo, String nombre, String numero_colegiado, String dpi, String telefono, String email, LocalTime hora_entrada, LocalTime hora_salida, LocalDate fecha_inicio, String password) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.numero_colegiado = numero_colegiado;
+        this.dpi = dpi;
+        this.telefono = telefono;
+        this.email = email;
+        this.hora_entrada = hora_entrada;
+        this.hora_salida = hora_salida;
+        this.fecha_inicio = fecha_inicio;
+        this.password = password;
+    }
+    
     
     public Medico(String codigo){
         this.codigo = codigo;

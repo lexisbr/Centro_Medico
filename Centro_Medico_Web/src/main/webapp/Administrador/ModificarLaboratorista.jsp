@@ -74,11 +74,7 @@
                                     %>
                                           <option value="<%=codigo%>"><%=nombre%></option>
                                   <%}
-                                  
-
                               } catch (Exception e) {
-
-
                               }
                       %>
                            </select>

@@ -12,24 +12,9 @@
 <html>
     <!-- Encabezado -->
       <%@include file="Encabezado.html" %>
-      <script>
-        function alerta() {
-            alert("Actualizado con exito");
-        }
-      </script>
-      <% String codigo_medico;
+      <%  String codigo_medico = request.getParameter("codigo");
           
-          try {
-               codigo_medico = request.getParameter("codigo");
-               
-          } catch (Exception e) {
-               codigo_medico = String.valueOf(session.getAttribute("codigo_medico"));
-          }
-          if(codigo_medico==null){
-              codigo_medico = String.valueOf(session.getAttribute("codigo_medico"));
-          }
           System.out.println(codigo_medico);
-          
           Medico medico = new Medico(codigo_medico);
           medico.consultarDatos();
       %>
@@ -38,7 +23,7 @@
               <h2 class="titleLex" >Modificar Medico</h2>
               <hr>
               <div class="centrar">
-                  <form action="ModificarMedico.jsp" method="post" class="form-control" style="width: 500px; height: 850px; background: #ccccff;">
+                  <form action="../ModificarMedico" method="post" class="form-control" style="width: 500px; height: 850px; background: #ccccff;">
                       <div class="form-group">
                           <h1>Codigo</h1>
                           <input type="text" readonly="" name="codigo" class="form-control" value="<%=medico.getCodigo()%>" required=""/>
@@ -79,58 +64,7 @@
                           <h1>Password</h1>
                           <input type="password" name="password" class="form-control" value="<%=medico.getPassword()%>" required=""/>
                       </div>
-
-
-                      <%
-                          try {
-                              if (request.getParameter("boton") != null) {
-                                  String nombre = request.getParameter("nombre");
-                                  String numero_colegiado = request.getParameter("numero_colegiado");
-                                  String dpi = request.getParameter("dpi");
-                                  String telefono = request.getParameter("telefono");
-                                  String email = request.getParameter("email");
-                                  String hora_entrada = request.getParameter("hora_entrada");
-                                  String hora_salida = request.getParameter("hora_salida");
-                                  String fecha = request.getParameter("fecha");
-                                  String password = request.getParameter("password");
-                                  
-                                  LocalTime horaEntradaIngresada = LocalTime.parse(hora_entrada);
-                                  LocalTime horaSalidaIngresada = LocalTime.parse(hora_salida);
-                                  
-                                  if((horaEntradaIngresada.isBefore(horaSalidaIngresada))){
-                                    medico.setNombre(nombre);
-                                    medico.setNumero_colegiado(numero_colegiado);
-                                    medico.setDpi(dpi);
-                                    medico.setTelefono(telefono);
-                                    medico.setEmail(email);
-                                    medico.setHora_entrada(LocalTime.parse(hora_entrada));
-                                    medico.setHora_salida(LocalTime.parse(hora_salida));
-                                    medico.setFecha_inicio(LocalDate.parse(fecha));
-                                    medico.setPassword(password);
-
-
-                                    medico.actualizarMedico();  
-
-                                    
-                                      %>
-                                       <div class="mensaje-exito">
-                                            <h1>Medico registrado con exito</h1>
-                                        </div>
-                      
-                                 <% response.sendRedirect("ModificarMedico.jsp");
-                                    session.setAttribute("codigo_medico", medico.getCodigo());
-
-                                     
-                                    }else{ %>
-                                    <h3>No ingreso correctamente las horas</h3>
-                                  <%} 
-                              }
-                          } catch (Exception e) {
-                            System.out.println("Error "+e);
-                          }
-                      %>
-                      <input type="submit" name="boton" value="Guardar" class="guardar" onclick="alerta()"/>
-
+                      <input type="submit" name="boton" value="Guardar" class="guardar"/>
                   </form>
               </div>
           </div>

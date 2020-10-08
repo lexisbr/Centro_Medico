@@ -31,9 +31,9 @@
                              BuscadorMedico medico = new BuscadorMedico();
                              ResultSet rs =null;
                              if(campo!=null){
-                                    rs = medico.buscadorCodigo(campo);
+                                    rs = medico.buscadorCodigoSinEsp(campo);
                                 }else{
-                                    rs = medico.mostrarMedicos();
+                                    rs = medico.mostrarMedicosSinEsp();
                                 }
                                 
                                  while (rs.next()){ %>
@@ -42,7 +42,6 @@
                                             <td class="text-center"><%=rs.getString("nombre")%> </td>
                                             <td class="text-center"><%=rs.getString("numero_colegiado")%> </td>
                                             <td class="text-center"><%=rs.getString("dpi")%> </td>
-                                            <td class="text-center"><%=rs.getString("especialidad_nombre")%> </td>
                                             <td>
                                                 <a class="btn btn-warning btn-sm" href="AgregarEspecialidad.jsp?codigo_medico=<%=rs.getString("codigo")%>">Agregar Especialidad</a>
                                             </td>

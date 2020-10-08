@@ -148,4 +148,41 @@ public class BuscadorMedico {
         }   
     }
     
+    /*
+        METODO PARA MOSTRAR TODOS LOS MEDICOS
+    */
+    
+    public ResultSet mostrarMedicosSinEsp(){
+        String query = "SELECT * FROM MEDICO";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+            
+        } catch (SQLException e) {
+            return null;
+        }   
+    }
+    
+    
+    
+    /*
+        METODO PARA BUSCAR MEDICO POR NOMBRE
+    */
+    public ResultSet buscadorCodigoSinEsp(String nombre) throws SQLException{
+        String query = "SELECT * FROM MEDICO WHERE codigo LIKE '%"+nombre+"%'";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+            
+        } catch (SQLException e) {
+            return null;
+        }   
+    }
+    
 }

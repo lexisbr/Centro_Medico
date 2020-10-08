@@ -116,7 +116,7 @@ public class GenerarInformeExamen extends HttpServlet {
             PdfDocument pdfDoc = new PdfDocument(writer);
             Document document = new Document(pdfDoc);
             String informe_g = "Codigo del informe: " + codigo_informe;
-            String doctor = "Codigo del laboratorista que genero la orden: " + lab_codigo;
+            String doctor = "Codigo del laboratorista que genero el informe: " + lab_codigo;
             String paciente = "Codigo del paciente: " + paciente_codigo;
             String examen = "Codigo de examen: " + examen_codigo;
             String desc = "Descripcion: " + descripcion;

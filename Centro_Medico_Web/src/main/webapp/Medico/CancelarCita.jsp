@@ -18,7 +18,7 @@
       %>
          <section class="contenidoLex">
              <form action="CancelarCita.jsp" method="POST">
-                  <h2 class="titleLex">Visualizar citas medicas</h2><br>
+                  <h2 class="titleLex">Cancelar cita</h2><br>
                  <div class="wrap">
                      <h2>Ingrese codigo de cita medica:</h2>
                      <%@include file="SearchBar.html" %>

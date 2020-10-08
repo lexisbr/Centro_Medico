@@ -14,7 +14,7 @@
       <%@include file="Encabezado.html" %>
       <section class="contenidoLex">
           <form action="BuscarPacienteOrden.jsp" method="POST">
-               <h2 class="titleLex">Buscar paciente</h2><br>
+               <h2 class="titleLex">Generar orden de examen</h2><br>
               <div class="wrap">
                   <h2>Ingrese codigo de paciente:</h2>
                   <%@include file="SearchBar.html" %>

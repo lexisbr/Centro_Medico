@@ -46,7 +46,7 @@
                                             <td class="text-center"><%=rs.getString("hora_salida")%> </td>
                                             <td class="text-center"><%=rs.getString("especialidad_nombre")%> </td>
                                             <td>
-                                                <a class="btn btn-warning btn-sm" href="ModificarMedico.jsp?codigo=<%=rs.getString("codigo")%>">Modificar Medico</a>
+                                                <a class="btn btn-warning btn-sm" href="ModificarMedico.jsp?codigo=<%=rs.getString("codigo")%>">Modificar</a>
                                             </td>
                                         </tr>
                                     <% } 

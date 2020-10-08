@@ -15,8 +15,9 @@
     <%@include file="Encabezado.html" %>
     <section class="contenidoLex">
         <form action="VisualizarOrdenes.jsp" method="POST">
-            <h2 class="titleLex">Seleccionar orden.</h2><br>
+            <h2 class="titleLex">Ordenes de examen.</h2><br>
             <div class="wrap">
+                <h2>Ingrese codigo de orden de examen:</h2>
                 <%@include file="SearchBar.html" %>
             </div>
 
@@ -34,7 +35,7 @@
                             BuscadorOrdenes orden = new BuscadorOrdenes();
                             ResultSet rs = null;
                             if (campo != null) {
-                               rs=orden.mostrarOrdenes(codigo_paciente);
+                                 rs=orden.mostrarOrdenesBuscar(codigo_paciente,campo);
                             } else {
                                 rs=orden.mostrarOrdenes(codigo_paciente);
                                   }

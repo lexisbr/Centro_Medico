@@ -43,6 +43,19 @@
                             <h1>Fecha de nacimiento</h1>
                             <input type="date" name="fecha" value="" min="1900-01-01" max="<%= LocalDate.now()%>" required="">
                         </div>
+                        <div class="form-group" style="margin-bottom: 0px;">
+                             <h1 style="position: relative; top: -42px; left: 90px;">Tipo de sangre</h1>
+                             <select  name="sangre" style="position: relative; top: -35px;" required="">
+                                <option value="a+" >A+</option>
+                                <option value="a-" >A-</option>
+                                <option value="b+" >B+</option>
+                                <option value="b-" >B-</option>
+                                <option value="ab+" >AB+</option>
+                                <option value="ab-" >AB-</option>
+                                <option value="o+" >O+</option>
+                                <option value="o-" >O-</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <input type="number" name="dpi"  step="1" min="0" class="form-control" placeholder="DPI" required=""/>
                         </div>
@@ -52,9 +65,7 @@
                         <div class="form-group">
                             <input type="number" name="peso"  step="1" min="0" class="form-control" placeholder="Peso (Kg)" required=""/>
                         </div>
-                        <div class="form-group">
-                            <input type="text" name="sangre" class="form-control" placeholder="Tipo de sangre" required=""/>
-                        </div>
+                       
                         <div class="form-group">
                             <input type="email" name="email" class="form-control" placeholder="Email" required=""/>
                         </div>

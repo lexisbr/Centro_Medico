@@ -10,21 +10,8 @@
 <html>
     <!-- Encabezado -->
       <%@include file="Encabezado.html" %>
-      <script>
-        function alerta() {
-            alert("Actualizado con exito");
-        }
-      </script>
-      <% int examen_codigo;
-          
-          try {
-               examen_codigo = Integer.parseInt(request.getParameter("codigo"));
-          } catch (Exception e) {
-              String codigo = String.valueOf(session.getAttribute("codigo_examen"));
-               examen_codigo = Integer.parseInt(codigo);
-          }
-          
-          
+      <% 
+          int examen_codigo = Integer.parseInt(request.getParameter("codigo"));
           
           Examen_laboratorio examen = new Examen_laboratorio(examen_codigo);
           examen.consultarDatos();
@@ -34,7 +21,7 @@
               <h2 class="titleLex" >Modificar Examen</h2>
               <hr>
               <div class="centrar">
-                  <form action="ModificarExamen.jsp" method="post" class="form-control" style="width: 500px; height: 740px; background: #ccccff;">
+                  <form action="../ModificarExamen" method="post" class="form-control" style="width: 500px; height: 740px; background: #ccccff;">
                       <div class="form-group">
                           <h1>Codigo</h1>
                           <input type="text" readonly="" name="codigo" class="form-control" value="<%=examen.getCodigo()%>" required=""/>
@@ -79,48 +66,16 @@
                       </div>
 
 
-                      <% boolean resultado;
+                      <% /*boolean resultado;
                           try {
                               Double.parseDouble(request.getParameter("costo"));
                               resultado = true;
                           } catch (Exception excepcion) {
                               resultado = false;
-                          }
+                          }*/
                           
-                          try {
-                              if (request.getParameter("boton")!=null&&resultado&&request.getParameter("nombre_examen")!=null&&request.getParameter("descripcion")!=null&&request.getParameter("costo")!=null&&request.getParameter("tipo_archivo") != null) {
-                                  String nombre_examen = request.getParameter("nombre_examen");
-                                  String descripcion = request.getParameter("descripcion");
-                                  String costo = request.getParameter("costo");
-                                  String tipo_archivo = request.getParameter("tipo_archivo");
-                                  String requiere_orden = request.getParameter("requiere_orden");
-                                  boolean requiereorden=false;
-                                  if(requiere_orden.equals("true")){
-                                      requiereorden=true;
-                                  }else{
-                                      requiereorden=false;
-                                  }
-                                  examen.setNombre(nombre_examen);
-                                  examen.setDescripcion(descripcion);
-                                  examen.setCosto(Double.parseDouble(costo));
-                                  examen.setRequiere_orden(requiereorden);
-                                  examen.setTipo_archivo(tipo_archivo);
-                                  examen.actualizarExamen_laboratorio();
-                                  %>
-                                  <div class="mensaje-exito">
-                                      <h1>Examen actualizado con exito</h1>
-                                  </div>
-                                  
-                                  <%  
-                                      response.sendRedirect("ModificarExamen.jsp");
-                                      session.setAttribute("codigo_examen",request.getParameter("codigo"));
-                              }
-
-                          } catch (Exception e) {
-                          }
                       %>
-                      <input type="submit" name="boton" value="Guardar" class="guardar" onclick="alerta()"/>
-
+                      <input type="submit" name="boton" value="Guardar" class="guardar"/>
                   </form>
               </div>
           </div>

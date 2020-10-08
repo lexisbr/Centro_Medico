@@ -12,7 +12,7 @@
       <%@include file="Encabezado.html" %>
        <script>
         function alerta() {
-                alert("Llene todos los campos");
+                alert("Modificado con exito");
         }
       </script>
       <% int consulta_codigo;
@@ -77,7 +77,7 @@
                           } catch (Exception e) {
                           }
                       %>
-                      <input type="submit" name="boton" value="Guardar" class="guardar" onclick="alerta(<%=request.getParameter("costo")%>)"/>
+                      <input type="submit" name="boton" value="Guardar" class="guardar" onclick="alerta()"/>
 
                   </form>
               </div>

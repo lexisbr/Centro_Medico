@@ -1,20 +1,20 @@
 <%-- 
-    Document   : 10MedicosMasInformes
-    Created on : 8/10/2020, 01:30:30
+    Document   : ExamenesMasDemandados
+    Created on : 8/10/2020, 03:04:45
     Author     : lex
 --%>
 
-<%@page import="Funcionalidades.BuscadorInformes"%>
-<%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Funcionalidades.BuscadorExamenes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <%@include file="Encabezado.html" %>
+     <%@include file="Encabezado.html" %>
     <%
         String fecha_inicio = request.getParameter("fecha1");
         String fecha_final = request.getParameter("fecha2");
-        BuscadorInformes informes = new BuscadorInformes();
+        BuscadorExamenes informes = new BuscadorExamenes();
 
     %>
     <section class="contenidoLex">
@@ -26,17 +26,15 @@
             <div class="container">
                 <table class="table table-dark table-bordered">
                     <tr>
-                        <th class="text-center">Codigo</th>
-                        <th class="text-center">Medico</th>
-                        <th class="text-center">Cantidad de informes</th>
+                        <th class="text-center">Examen</th>
+                        <th class="text-center">Veces que se ha realizado</th>
                     </tr>
                     <% try {
-                            ResultSet rs = informes.obtenerMedicosConMasInformes(fecha_inicio, fecha_final);
+                            ResultSet rs = informes.obtenerExamenesDemandados(fecha_inicio, fecha_final);
                             while (rs.next()) {%>
                     <tr>
-                        <td class="text-center"><%=rs.getString("codigo")%> </td>
-                        <td class="text-center"><%=rs.getString("nombre")%> </td>
-                        <td class="text-center"><%=rs.getString("informes")%> </td>
+                        <td class="text-center"><%=rs.getString("examen")%> </td>
+                        <td class="text-center"><%=rs.getString("cantidad")%> </td>
                     </tr>
                     <% }
                         } catch (SQLException e) {
@@ -47,5 +45,5 @@
                 </table>
             </div>
     </section>
-</body>
+    </body>
 </html>

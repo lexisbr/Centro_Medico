@@ -131,6 +131,21 @@ public class BuscadorMedico {
         }   
     }
     
-    
+    /*
+        METODO PARA OBTENER LOS MEDICOS CON MAYOR CANTIDAD DE EXAMENES REQUERIDOS
+    */
+    public ResultSet medicosOrdenes() throws SQLException{
+        String query = "SELECT COUNT(*) AS ordenes,M.codigo,M.nombre FROM MEDICO M INNER JOIN ORDEN_EXAMEN O ON O.medico_codigo=M.codigo GROUP BY M.codigo ORDER BY ordenes ASC;";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+            
+        } catch (SQLException e) {
+            return null;
+        }   
+    }
     
 }

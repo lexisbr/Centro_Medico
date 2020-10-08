@@ -32,6 +32,10 @@ public class BuscadorCitas {
         this.codigo = codigo;
         this.fecha = fecha;
     }
+
+    public BuscadorCitas() {
+    }
+    
     
     public void setHora_entrada(Time hora_entrada) {
         this.hora_entrada = hora_entrada;
@@ -96,7 +100,43 @@ public class BuscadorCitas {
         } catch (SQLException e) {
 
         }
+        return null;
+    }
+    
+    
+    /*
+        METODO PARA OBTENER LA CANTIDAD DE CITAS AGENDADAS POR MEDICO
+    */
+    public ResultSet cantidadCitasMedicas(String fecha1,String fecha2) {
+        String query = "SELECT COUNT(C.codigo) AS citas,M.nombre,M.codigo FROM MEDICO M LEFT JOIN CITA_MEDICA C ON M.codigo=C.medico_codigo WHERE C.fecha BETWEEN ? AND ? GROUP BY M.codigo ORDER BY citas ASC LIMIT 5";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,fecha1);
+            st.setString(2,fecha2);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+        } catch (SQLException e) {
 
+        }
+        return null;
+    }
+    
+     /*
+        METODO PARA OBTENER LA CANTIDAD DE CITAS AGENDADAS POR MEDICO
+    */
+    public ResultSet cantidadMedicosSinCitas() {
+        String query = "SELECT COUNT(C.codigo) AS citas,M.nombre,M.codigo FROM MEDICO M LEFT JOIN CITA_MEDICA C ON M.codigo=C.medico_codigo WHERE C.codigo IS NULL GROUP BY M.codigo";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+
+        }
         return null;
     }
 

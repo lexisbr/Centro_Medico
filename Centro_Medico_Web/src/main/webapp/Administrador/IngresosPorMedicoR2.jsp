@@ -1,6 +1,6 @@
 <%-- 
-    Document   : 10MedicosMasInformes
-    Created on : 8/10/2020, 01:30:30
+    Document   : IngresosPorMedicoR2
+    Created on : 8/10/2020, 02:06:52
     Author     : lex
 --%>
 
@@ -18,7 +18,7 @@
 
     %>
     <section class="contenidoLex">
-            <h2 class="titleLex">10 Medicos con más informes de consulta</h2><br>
+            <h2 class="titleLex">Ingresos por medico</h2><br>
             <div class="wrap">
                 <h2>Fecha inicio:<%=fecha_inicio%></h2>
                 <h2>Fecha final:<%=fecha_final%></h2>
@@ -28,15 +28,15 @@
                     <tr>
                         <th class="text-center">Codigo</th>
                         <th class="text-center">Medico</th>
-                        <th class="text-center">Cantidad de informes</th>
+                        <th class="text-center">Ingresos generados</th>
                     </tr>
                     <% try {
-                            ResultSet rs = informes.obtenerMedicosConMasInformes(fecha_inicio, fecha_final);
+                            ResultSet rs = informes.obtenerIngresosMedico(fecha_inicio, fecha_final);
                             while (rs.next()) {%>
                     <tr>
                         <td class="text-center"><%=rs.getString("codigo")%> </td>
                         <td class="text-center"><%=rs.getString("nombre")%> </td>
-                        <td class="text-center"><%=rs.getString("informes")%> </td>
+                        <td class="text-center"><%=rs.getString("ingresos")%> </td>
                     </tr>
                     <% }
                         } catch (SQLException e) {

@@ -106,4 +106,23 @@ public class BuscadorExamenes {
         }   
     }
     
+    /*
+        METODO PARA OBTENER LOS EXAMANES MAS DEMANDADOS
+    */
+    public ResultSet obtenerExamenesDemandados(String fecha1, String fecha2) throws SQLException{
+        String query = "SELECT COUNT(*) AS cantidad,E.nombre AS examen FROM INFORME_EXAMEN I INNER JOIN EXAMEN_LABORATORIO E ON I.examen_laboratorio_codigo=E.codigo WHERE I.fecha BETWEEN ? AND ? GROUP BY examen ORDER BY cantidad DESC;";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,fecha1);
+            st.setString(2,fecha2);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+            
+        } catch (SQLException e) {
+            return null;
+        }   
+    }
+    
 }

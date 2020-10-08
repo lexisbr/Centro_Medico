@@ -117,7 +117,27 @@ public class BuscadorInformes {
         METODO PARA MOSTRAR LOS 10 MEDICOS CON MAS INFORMES EN UN INTERVALO
      */
     public ResultSet obtenerMedicosConMasInformes(String fecha1, String fecha2) {
-        String query = "SELECT COUNT(*) AS informes,M.nombre FROM MEDICO M INNER JOIN INFORME_CONSULTA I ON M.codigo=I.medico_codigo WHERE I.fecha BETWEEN ? AND ? GROUP BY M.nombre ORDER BY informes DESC LIMIT 10";
+        String query = "SELECT COUNT(*) AS informes,M.nombre,M.codigo FROM MEDICO M INNER JOIN INFORME_CONSULTA I ON M.codigo=I.medico_codigo WHERE I.fecha BETWEEN ? AND ? GROUP BY M.codigo ORDER BY informes DESC LIMIT 10";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1, fecha1);
+            st.setString(2, fecha2);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
+     /*
+        METODO PARA MOSTRAR LOS INGRESOS OBTENIDOS POR MEDICO
+     */
+    public ResultSet obtenerIngresosMedico(String fecha1, String fecha2) {
+        String query = "SELECT M.nombre,M.codigo,SUM(C.costo) AS ingresos FROM INFORME_CONSULTA I INNER JOIN CONSULTA C ON C.codigo=I.consulta_codigo INNER \n" +
+        "JOIN MEDICO M ON I.medico_codigo=M.codigo WHERE I.fecha BETWEEN ? AND ? GROUP BY M.codigo ORDER BY ingresos DESC";
         try {
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);

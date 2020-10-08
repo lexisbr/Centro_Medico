@@ -11,26 +11,7 @@
 <html>
     <!-- Encabezado -->
       <%@include file="Encabezado.html" %>
-      <script>
-          
-        function alerta() {
-            alert("Actualizado con exito");
-        }
-      </script>
-      <% String codigo_paciente;
-          
-          try {
-               codigo_paciente = request.getParameter("codigo");
-               
-          } catch (Exception e) {
-               codigo_paciente = String.valueOf(session.getAttribute("codigo_paciente"));
-               System.out.println("entra aqui "+codigo_paciente);
-          }
-          if(codigo_paciente==null){
-              codigo_paciente = String.valueOf(session.getAttribute("codigo_paciente"));
-               System.out.println("entra aqui "+codigo_paciente);
-          }
-         
+      <% String codigo_paciente = request.getParameter("codigo");
           
           Paciente paciente = new Paciente(codigo_paciente);
           paciente.consultarDatos();
@@ -40,7 +21,7 @@
               <h2 class="titleLex" >Modificar Paciente</h2>
               <hr>
               <div class="centrar">
-                  <form action="ModificarPaciente.jsp" method="post" class="form-control" style="width: 500px; height: 1000px; background: #ccccff;">
+                  <form action="../ModificarPaciente" method="post" class="form-control" style="width: 500px; height: 1000px; background: #ccccff;">
                       <div class="form-group">
                           <h1>Codigo</h1>
                           <input type="text" readonly="" name="codigo" class="form-control" value="<%=paciente.getCodigo()%>" required=""/>
@@ -87,50 +68,7 @@
                           <h1>Password</h1>
                           <input type="password" name="password" class="form-control" value="<%=paciente.getPassword()%>" required=""/>
                       </div>
-
-
-                      <% 
-                          try {
-                               if (request.getParameter("boton")!=null&&request.getParameter("codigo") != null && request.getParameter("nombre") != null && !request.getParameter("sexo").equals("null") && request.getParameter("fecha") != null && request.getParameter("dpi") != null && request.getParameter("peso") != null && request.getParameter("sangre") != null && request.getParameter("email") != null && request.getParameter("password") != null) {
-                                  String nombre = request.getParameter("nombre");
-                                  String sexo = request.getParameter("sexo");
-                                  String fecha_nacimiento = request.getParameter("fecha");
-                                  String dpi = request.getParameter("dpi");
-                                  String telefono = request.getParameter("telefono");
-                                  String peso = request.getParameter("peso");
-                                  String tipo_sangre = request.getParameter("sangre");
-                                  String email = request.getParameter("email");
-                                  String password = request.getParameter("password");
-                                  
-                                  paciente.setNombre(nombre);
-                                  paciente.setSexo(sexo);
-                                  paciente.setFecha_nacimiento(LocalDate.parse(fecha_nacimiento));
-                                  paciente.setDpi(dpi);
-                                  paciente.setTelefono(telefono);
-                                  paciente.setPeso(peso);
-                                  paciente.setTipo_sangre(tipo_sangre);
-                                  paciente.setEmail(email);
-                                  paciente.setPassword(password);
-                                  paciente.actualizarPaciente();
-                                  
-                                  %>
-                                  <div class="mensaje-exito">
-                                      <h1>Examen actualizado con exito</h1>
-                                  </div>
-                                  
-                                  <%  
-                                      response.sendRedirect("ModificarPaciente.jsp");
-                                      session.setAttribute("codigo_paciente",paciente.getCodigo());
-                                       System.out.println(codigo_paciente);
-                                    
-                                      
-                              }
-
-                          } catch (Exception e) {
-                          }
-                      %>
-                      <input type="submit" name="boton" value="Guardar" class="guardar" onclick="alerta()"/>
-
+                      <input type="submit" name="boton" value="Guardar" class="guardar"/>
                   </form>
               </div>
           </div>

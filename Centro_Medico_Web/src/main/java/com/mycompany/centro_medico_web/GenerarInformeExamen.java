@@ -5,19 +5,19 @@
  */
 package com.mycompany.centro_medico_web;
 
-import Entidades.Orden_examen;
+import Entidades.Informe_examen;
+import Funcionalidades.CitasLab;
 import com.itextpdf.kernel.pdf.PdfDocument;
-import static com.itextpdf.kernel.pdf.PdfName.Font;
-import static com.itextpdf.kernel.pdf.PdfName.FontFamily;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author lex
  */
-@WebServlet(name = "GenerarOrdenExamen", urlPatterns = {"/GenerarOrdenExamen"})
-public class GenerarOrdenExamen extends HttpServlet {
+@WebServlet(name = "GenerarInformeExamen", urlPatterns = {"/GenerarInformeExamen"})
+public class GenerarInformeExamen extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,10 +48,10 @@ public class GenerarOrdenExamen extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GenerarOrdenExamen</title>");
+            out.println("<title>Servlet GenerarInformeExamen</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet GenerarOrdenExamen at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet GenerarInformeExamen at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -84,20 +84,24 @@ public class GenerarOrdenExamen extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            int codigo_cita = Integer.parseInt(request.getParameter("codigo_cita"));
             String descripcion = request.getParameter("descripcion");
-            String codigo_medico = request.getParameter("codigo_medico");
-            String codigo_paciente = request.getParameter("codigo_paciente");
-            int codigo_examen = Integer.parseInt(request.getParameter("codigo_examen"));
-
-            Orden_examen orden = new Orden_examen(0, descripcion, codigo_medico, codigo_medico, codigo_examen);
-            int codigo_orden = orden.insertarOrden();
-            System.out.println("codigo orden " + codigo_orden);
+            String fecha = request.getParameter("fecha");
+            String hora = request.getParameter("hora");
+            String examen_codigo = request.getParameter("examen_codigo");
+            String paciente_codigo = request.getParameter("paciente_codigo");
+            String lab_codigo = request.getParameter("lab_codigo");
             
+            Informe_examen informe = new Informe_examen(0, descripcion, LocalDate.parse(fecha), LocalTime.parse(hora), examen_codigo, paciente_codigo, lab_codigo);
+            int codigo_informe = informe.insertarInforme_examen();
+            
+            CitasLab eliminar = new CitasLab();
+            eliminar.eliminarCita(codigo_cita);
             
             String contextPath = getServletContext().getRealPath(File.separator);
             
              //Crea una carpeta para guardar las ordenes
-            File directorio = new File(contextPath+"/Ordenes-medicas");
+            File directorio = new File(contextPath+"/Informes-examenes");
             if (!directorio.exists()) {
                 if (directorio.mkdirs()) {
                     System.out.println("Directorio ordenes creados");
@@ -106,17 +110,17 @@ public class GenerarOrdenExamen extends HttpServlet {
 
             
 
-            String path = contextPath + "/Ordenes-medicas/orden_" + codigo_paciente+"_"+codigo_orden+".pdf";
+            String path = contextPath + "/Informes-examenes/informe_" + paciente_codigo+"_"+codigo_informe+".pdf";
 
             PdfWriter writer = new PdfWriter(path);
             PdfDocument pdfDoc = new PdfDocument(writer);
             Document document = new Document(pdfDoc);
-            String orden_m = "Codigo de la orden : " + codigo_orden;
-            String doctor = "Codigo del medico que genero la orden : " + codigo_medico;
-            String paciente = "Codigo del paciente que debe realizar examen: " + codigo_paciente;
-            String examen = "Codigo de examen: " + codigo_examen;
+            String informe_g = "Codigo del informe: " + codigo_informe;
+            String doctor = "Codigo del laboratorista que genero la orden: " + lab_codigo;
+            String paciente = "Codigo del paciente: " + paciente_codigo;
+            String examen = "Codigo de examen: " + examen_codigo;
             String desc = "Descripcion: " + descripcion;
-            Paragraph para1 = new Paragraph(orden_m);
+            Paragraph para1 = new Paragraph(informe_g);
             Paragraph para2 = new Paragraph(doctor);
             Paragraph para3 = new Paragraph(paciente);
             Paragraph para4 = new Paragraph(examen);
@@ -128,7 +132,7 @@ public class GenerarOrdenExamen extends HttpServlet {
             document.add(para5);
             document.close();
             
-            String pdfFileName = "Ordenes-medicas/orden_" + codigo_paciente +"_"+codigo_orden+".pdf";
+            String pdfFileName = "Informes-examenes/informe_" + paciente_codigo +"_"+codigo_informe+".pdf";
             File pdfFile = new File(path);
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
@@ -141,14 +145,11 @@ public class GenerarOrdenExamen extends HttpServlet {
                 responseOutputStream.write(bytes);
             }
             
-            response.sendRedirect("Medico/ExitoOrden.jsp");
-
-
+            response.sendRedirect("Laboratorista/ExitoInforme.jsp");
+            
         } catch (Exception e) {
-            System.out.println("error en servlet " + e);
         }
-
-    }
+   }
 
     /**
      * Returns a short description of the servlet.

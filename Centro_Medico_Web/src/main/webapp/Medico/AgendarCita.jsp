@@ -22,7 +22,6 @@
          String codigo_medico = String.valueOf(session.getAttribute("user"));
          String codigo_paciente = request.getParameter("codigo_paciente");
          BuscadorMedico medico = new BuscadorMedico();
-         System.out.println("codigo medico "+codigo_medico);
          ResultSet rs = medico.selectMedico(codigo_medico);
          while (rs.next()) { %>
          <section class="contenidoLex">

@@ -211,7 +211,7 @@ public class Laboratorista {
     */
     
      public void consultarDatos() throws UnsupportedEncodingException {
-        String query = "SELECT * FROM LABORATORISTA WHERE codigo=?";
+        String query = "SELECT L.*,E.nombre AS nombre_examen FROM LABORATORISTA L INNER JOIN EXAMEN_LABORATORIO E ON E.codigo=L.examen_laboratorio_codigo WHERE L.codigo=?";
         
         try {
             //Se establecen los parametros del PreparedStament
@@ -228,6 +228,7 @@ public class Laboratorista {
                 setFecha_inicio(LocalDate.parse(rs.getString(7)));
                 setPassword(Encriptador.desencriptar(rs.getString("password")));
                 setExamen_laboratorio_codigo(rs.getInt("examen_laboratorio_codigo"));
+                setExamen_nombre(rs.getString("nombre_examen"));
             }
         } catch (SQLException e) {
             System.out.println("Error " + e);

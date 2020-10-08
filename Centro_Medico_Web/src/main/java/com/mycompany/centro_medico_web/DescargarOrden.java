@@ -6,8 +6,6 @@
 package com.mycompany.centro_medico_web;
 
 import org.apache.commons.io.FileUtils;
-import Entidades.Archivo_informe;
-import Entidades.Archivo_orden;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;

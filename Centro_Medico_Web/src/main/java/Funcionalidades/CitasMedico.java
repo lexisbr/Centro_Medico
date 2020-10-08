@@ -60,12 +60,34 @@ public class CitasMedico {
     */
     
     public ResultSet citasMedicasBuscar(String campo) {
-        String query = "SELECT C.*,P.nombre AS nombre_paciente, E.nombre_especialidad AS nombre_consulta FROM CITA_MEDICA C INNER JOIN PACIENTE P ON P.codigo=C.paciente_codigo INNER JOIN CONSULTA E ON E.codigo=C.consulta_codigo WHERE C.medico_codigo=?&&C.codigo="+campo+" ";
+        String query = "SELECT C.*,P.nombre AS nombre_paciente, E.nombre_especialidad AS nombre_consulta FROM CITA_MEDICA C INNER JOIN PACIENTE P ON P.codigo=C.paciente_codigo INNER JOIN CONSULTA E ON E.codigo=C.consulta_codigo WHERE C.medico_codigo=?&&C.codigo LIKE '%"+campo+"%' ";
 
         try {
             //Se establecen los parametros del PreparedStament
             PreparedStatement st = Conexion.getConexion().prepareStatement(query);
             st.setString(1, getCodigo_medico());
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            return null;
+
+        }
+
+    }
+    
+    /*
+    METODO PARA OBTENER LAS CITAS MEDICAS DE UN PACIENTE FILTRANDO POR CODIGO
+    */
+    
+    public ResultSet citasMedicasBuscarEspecifico(String campo) {
+        String query = "SELECT C.*,P.nombre AS nombre_paciente, E.nombre_especialidad AS nombre_consulta FROM CITA_MEDICA C INNER JOIN PACIENTE P ON P.codigo=C.paciente_codigo INNER JOIN CONSULTA E ON E.codigo=C.consulta_codigo WHERE C.medico_codigo=?&&C.codigo=?";
+
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1, getCodigo_medico());
+            st.setString(2, campo);
             //Ejecuta el select
             ResultSet rs = st.executeQuery();
             return rs;

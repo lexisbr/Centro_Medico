@@ -51,6 +51,9 @@ public class RedireccionarLogin extends HttpServlet {
                     session.setAttribute("message",null);
                     
                 }else if(tipo.equals("LABORATORISTA")){
+                    paginaDestino = "Laboratorista/IndexLab.jsp"; 
+                    request.setAttribute("message", null);
+                    session.setAttribute("message",null);
                     
                 }else if(tipo.equals("ADMINISTRADOR")){
                     paginaDestino = "Administrador/IndexAdmin.jsp";

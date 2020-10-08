@@ -95,5 +95,66 @@ public class BuscadorInformes {
         }   
     }
     
+      /*
+        METODO PARA MOSTRAR LOS INFORMES DE EXAMEN REALIZADOS POR LAB EN EL DIA EN CURSO
+    */
+    
+    public ResultSet pacienteInformesExamenHoy(String codigo_lab, String fecha){
+        String query = "SELECT * FROM INFORME_EXAMEN WHERE laboratorista_codigo=? && fecha=?";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,codigo_lab);
+            st.setString(2,fecha);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+            
+        } catch (SQLException e) {
+            return null;
+        }   
+    }
+    
+     /*
+        METODO PARA MOSTRAR LOS INFORMES DE EXAMEN REALIZADOS POR DIA EN UN INTERVALO
+    */
+    
+    public ResultSet pacienteCantidadInformesIntervalo(String codigo_lab, String fecha1, String fecha2){
+        String query = "SELECT COUNT(*) AS numero_informes,fecha FROM INFORME_EXAMEN  WHERE fecha BETWEEN ? AND ? && laboratorista_codigo=? GROUP BY fecha";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,fecha1);
+            st.setString(2,fecha2);
+            st.setString(3,codigo_lab);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+            
+        } catch (SQLException e) {
+            return null;
+        }   
+    }
+    
+    
+     /*
+        METODO PARA MOSTRAR LAS 10 FECHAS CON MAS INFORMES REALIZADOS
+    */
+    
+    public ResultSet pacienteCantidadInformesFecha(String codigo_lab){
+        String query = "SELECT COUNT(*) AS numero_informes,fecha FROM INFORME_EXAMEN  WHERE laboratorista_codigo=? GROUP BY fecha ORDER BY fecha LIMIT 10";
+        try {
+            //Se establecen los parametros del PreparedStament
+            PreparedStatement st = Conexion.getConexion().prepareStatement(query);
+            st.setString(1,codigo_lab);
+            //Ejecuta el select
+            ResultSet rs = st.executeQuery();
+            return rs;
+            
+        } catch (SQLException e) {
+            return null;
+        }   
+    }
+    
     
 }

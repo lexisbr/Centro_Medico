@@ -8,7 +8,9 @@ package Entidades;
 import MYSQL.Conexion;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,7 +20,7 @@ import java.time.LocalTime;
  * @author lex
  */
 public class Informe_examen {
-    private String codigo;
+    private int codigo;
     private String descripcion;
     private LocalDate fecha;
     private LocalTime hora;
@@ -26,7 +28,7 @@ public class Informe_examen {
     private String paciente_codigo;
     private String laboratorista_codigo;
 
-    public Informe_examen(String codigo, String descripcion, LocalDate fecha, LocalTime hora, String examen_laboratorio_codigo, String paciente_codigo, String laboratorista_codigo) {
+    public Informe_examen(int codigo, String descripcion, LocalDate fecha, LocalTime hora, String examen_laboratorio_codigo, String paciente_codigo, String laboratorista_codigo) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.fecha = fecha;
@@ -36,7 +38,7 @@ public class Informe_examen {
         this.laboratorista_codigo = laboratorista_codigo;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
@@ -64,7 +66,7 @@ public class Informe_examen {
         return laboratorista_codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -92,13 +94,14 @@ public class Informe_examen {
         this.laboratorista_codigo = laboratorista_codigo;
     }
     
-    public void insertarInforme_examen() throws SQLException{
+    public int insertarInforme_examen() throws SQLException{
        String query = "INSERT INTO INFORME_EXAMEN VALUES(?,?,?,?,?,?,?)";
+       int informe=0;
         
        try { 
            //Se establecen los parametros del PreparedStament
-           PreparedStatement st = Conexion.getConexion().prepareStatement(query);
-           st.setString(1,getCodigo());
+           PreparedStatement st = Conexion.getConexion().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+           st.setInt(1,getCodigo());
            st.setString(2,getDescripcion());
            st.setDate(3,Date.valueOf(getFecha()));
            st.setTime(4,Time.valueOf(getHora()));
@@ -107,9 +110,19 @@ public class Informe_examen {
            st.setString(7,getLaboratorista_codigo());
            //Ejecuta el insert
            st.execute();
-           st.close();
+           
+           
+            ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                informe = rs.getInt(1);
+            }
+            rs.close();
+            st.close();
+            return informe;
+           
         } catch (SQLException e) {
             System.out.println("Error "+e);
+            return 0;
         }
         
     }

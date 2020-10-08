@@ -165,16 +165,6 @@ CREATE TABLE IF NOT EXISTS INFORME_EXAMEN (
 );
 
 -- -----------------------------------------------------
--- Tabla ARCHIVO_INFORME
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS ARCHIVO_INFORME(
-	`archivo` LONGBLOB NOT NULL,
-    `informe_examen_codigo` INT NOT NULL,
-    PRIMARY KEY (`informe_examen_codigo`),
-		FOREIGN KEY (`informe_examen_codigo`) REFERENCES INFORME_EXAMEN(`codigo`)
-); 
-
--- -----------------------------------------------------
 -- Tabla ESPECIALIZACION
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS ESPECIALIZACION (
@@ -198,16 +188,6 @@ CREATE TABLE IF NOT EXISTS ORDEN_EXAMEN(
 	FOREIGN KEY (`medico_codigo`) REFERENCES MEDICO (`codigo`),
     FOREIGN KEY (`paciente_codigo`) REFERENCES PACIENTE (`codigo`),
     FOREIGN KEY (`examen_laboratorio_codigo`) REFERENCES EXAMEN_LABORATORIO (`codigo`)
-);
-
--- -----------------------------------------------------
--- Tabla ARCHIVO_ORDEN
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS ARCHIVO_ORDEN(
-	`archivo` LONGBLOB NOT NULL,
-    `orden_examen_codigo` INT NOT NULL,
-    PRIMARY KEY (`orden_examen_codigo`),
-		FOREIGN KEY (`orden_examen_codigo`) REFERENCES ORDEN_EXAMEN(`codigo`)
 );
 
 -- -----------------------------------------------------

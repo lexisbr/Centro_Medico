@@ -15,25 +15,7 @@
 <html>
    <!-- Encabezado -->
       <%@include file="Encabezado.html" %>
-      <script>
-          
-        function alerta() {
-            alert("Actualizado con exito");
-        }
-      </script>
-      <% String codigo_lab;
-          
-          try {
-               codigo_lab = request.getParameter("codigo");
-               
-          } catch (Exception e) {
-               codigo_lab = String.valueOf(session.getAttribute("codigo_lab"));
-          }
-          if(codigo_lab==null){
-              codigo_lab = String.valueOf(session.getAttribute("codigo_lab"));
-          }
-          System.out.println(codigo_lab);
-          
+      <%  String codigo_lab = request.getParameter("codigo");
           Laboratorista lab = new Laboratorista(codigo_lab);
           lab.consultarDatos();
       %>
@@ -42,7 +24,7 @@
               <h2 class="titleLex" >Modificar Laboratorista</h2>
               <hr>
               <div class="centrar">
-                  <form action="ModificarLaboratorista.jsp" method="post" class="form-control" style="width: 500px; height: 900px; background: #ccccff;">
+                  <form action="../ModificarLab" method="post" class="form-control" style="width: 500px; height: 900px; background: #ccccff;">
                       <div class="form-group">
                           <h1>Codigo</h1>
                           <input type="text" readonly="" name="codigo" class="form-control" value="<%=lab.getCodigo()%>" required=""/>
@@ -105,48 +87,7 @@
                           <h1>Password</h1>
                           <input type="password" name="password" class="form-control" value="<%=lab.getPassword()%>" required=""/>
                       </div>
-
-
-                      <%
-                          try {
-                              if (request.getParameter("boton") != null) {
-                                  String nombre = request.getParameter("nombre");
-                                  String numero_registro = request.getParameter("numero_registro");
-                                  String dpi = request.getParameter("dpi");
-                                  String telefono = request.getParameter("telefono");
-                                  String email = request.getParameter("email");
-                                  String fecha = request.getParameter("fecha");
-                                  String password = request.getParameter("password");
-                                  String examen_codigo = request.getParameter("examen_codigo");
-
-                                  lab.setNombre(nombre);
-                                  lab.setNumero_registro(numero_registro);
-                                  lab.setDpi(dpi);
-                                  lab.setTelefono(telefono);
-                                  lab.setEmail(email);
-                                  lab.setFecha_inicio(LocalDate.parse(fecha));
-                                  lab.setPassword(password);
-                                  lab.setExamen_laboratorio_codigo(Integer.parseInt(examen_codigo));
-
-                                  lab.actualizarLaboratorista();
-
-                                    
-                                      %>
-                                       <div class="mensaje-exito">
-                                            <h1>Medico registrado con exito</h1>
-                                        </div>
-                      
-                                 <% response.sendRedirect("ModificarLaboratorista.jsp");
-                                    session.setAttribute("codigo_lab", lab.getCodigo());
-
-                                     
-                                    }
-                          } catch (Exception e) {
-                            System.out.println("Error "+e);
-                          }
-                      %>
-                      <input type="submit" name="boton" value="Guardar" class="guardar" onclick="alerta()"/>
-
+                      <input type="submit" name="boton" value="Guardar" class="guardar"/>
                   </form>
               </div>
           </div>
